@@ -878,7 +878,8 @@
 </div>
 
 <script>
-const CATEGORIES = ['Waist Bags', 'Shoulder Bags', 'Cross Bags', 'Wallets', 'Accessories'];
+/* ============ CATEGORIES (تم التعديل) ============ */
+const CATEGORIES = ['Shoulder bag', 'Cross bag', 'Clutch', 'Hats', 'Phone strap'];
 
 const COLORS = [
   {name:'Light Pink', hex:'#EFC0C6'},
@@ -903,16 +904,18 @@ function ph(seed, c1, c2){
     </svg>`);
 }
 
+/* ============ PRODUCTS (تم تعديلها لتناسب الأقسام الجديدة) ============ */
 const PRODUCTS = [
-  { id:1, cat:'Waist Bags', price:850, oldPrice:null, colors:[0,1,2], sizes:['S','M','L'], img:ph(1,'#F8E3E6','#EFC0C6'), badge:'Best Seller', date:5 },
-  { id:2, cat:'Waist Bags', price:780, oldPrice:950, colors:[1,3], sizes:['S','M'], img:ph(2,'#F0E5D8','#E3CBB4'), badge:'Sale', date:2 },
-  { id:3, cat:'Waist Bags', price:920, oldPrice:null, colors:[2,0], sizes:['S','M','L'], img:ph(3,'#E9C6CB','#C98A93'), badge:null, date:8 },
-  { id:4, cat:'Shoulder Bags', price:1250, oldPrice:null, colors:[3,4], sizes:['One size'], img:ph(4,'#FFF8F4','#E3CBB4'), badge:'New', date:1 },
-  { id:5, cat:'Cross Bags', price:690, oldPrice:null, colors:[0,3], sizes:['One size'], img:ph(5,'#F8E3E6','#FFFDFB'), badge:null, date:11 },
-  { id:6, cat:'Wallets', price:420, oldPrice:480, colors:[1,4], sizes:['One size'], img:ph(6,'#EADFCB','#A9806B'), badge:'Sale', date:14 },
-  { id:7, cat:'Waist Bags', price:0, oldPrice:null, colors:[2], sizes:['S','M'], img:ph(7,'#E9C6CB','#A9806B'), badge:'Sold Out', date:20, soldOut:true },
-  { id:8, cat:'Shoulder Bags', price:1100, oldPrice:null, colors:[0,1,2,3], sizes:['S','M','L'], img:'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png', badge:null, date:3 },
-  { id:9, cat:'Accessories', price:280, oldPrice:null, colors:[4], sizes:['One size'], img:ph(9,'#E3CBB4','#A9806B'), badge:null, date:9 },
+  { id:1, cat:'Shoulder bag', price:950, oldPrice:null, colors:[0,1,2], sizes:['S','M','L'], img:ph(1,'#F8E3E6','#EFC0C6'), badge:'New', date:1 },
+  { id:2, cat:'Shoulder bag', price:780, oldPrice:850, colors:[1,3], sizes:['One size'], img:ph(2,'#F0E5D8','#E3CBB4'), badge:'Sale', date:2 },
+  { id:3, cat:'Cross bag', price:890, oldPrice:null, colors:[2,0], sizes:['S','M'], img:ph(3,'#E9C6CB','#C98A93'), badge:'Best Seller', date:3 },
+  { id:4, cat:'Cross bag', price:1250, oldPrice:null, colors:[3,4], sizes:['One size'], img:ph(4,'#FFF8F4','#E3CBB4'), badge:null, date:4 },
+  { id:5, cat:'Clutch', price:690, oldPrice:null, colors:[0,3], sizes:['One size'], img:ph(5,'#F8E3E6','#FFFDFB'), badge:null, date:5 },
+  { id:6, cat:'Clutch', price:420, oldPrice:480, colors:[1,4], sizes:['One size'], img:ph(6,'#EADFCB','#A9806B'), badge:'Sale', date:6 },
+  { id:7, cat:'Hats', price:550, oldPrice:null, colors:[2], sizes:['One size'], img:ph(7,'#E9C6CB','#A9806B'), badge:'Sold Out', date:7, soldOut:true },
+  { id:8, cat:'Hats', price:300, oldPrice:null, colors:[0,1,2,3], sizes:['Adjustable'], img:ph(8,'#F0E5D8','#EFC0C6'), badge:null, date:8 },
+  { id:9, cat:'Phone strap', price:280, oldPrice:null, colors:[4], sizes:['One size'], img:ph(9,'#E3CBB4','#A9806B'), badge:null, date:9 },
+  { id:10, cat:'Phone strap', price:320, oldPrice:360, colors:[1,3], sizes:['One size'], img:ph(10,'#F8E3E6','#E3CBB4'), badge:'Sale', date:10 },
 ];
 
 let state = {
@@ -923,7 +926,7 @@ let state = {
 };
 let cart = [];
 
-const announceMsgs = ['Free delivery on orders over 1,500 EGP.', 'Free delivery on orders over 1,500 EGP.', 'Free delivery on orders over 1,500 EGP.', 'Free delivery on orders over 1,500 EGP.'];
+const announceMsgs = ['ads ads ads', 'ads ads ads', 'ads ads ads', 'ads ads ads'];
 document.getElementById('announceTrack').innerHTML = [...announceMsgs, ...announceMsgs].map(m => `<span>${m}</span>`).join('');
 
 function renderCategories(){
@@ -1114,7 +1117,7 @@ function renderCart(){
   countEl.textContent = totalQty;
 
   if(cart.length === 0){
-    wrap.innerHTML = `<div class="cart-empty">Your cart is empty.<br></div>`;
+    wrap.innerHTML = `<div class="cart-empty">Your cart is empty.<br>Now's a good time to add a piece you love.</div>`;
     totalEl.textContent = '0 EGP';
     return;
   }
