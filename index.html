@@ -309,6 +309,7 @@
 
   .product-card{
     position:relative;
+    cursor:pointer;
   }
   .product-img-wrap{
     position:relative;
@@ -338,26 +339,6 @@
   }
   .badge.sold-out{background:var(--ink); opacity:0.7;}
 
-  .add-to-cart-btn{
-    position:absolute;
-    bottom:12px; left:12px; right:12px;
-    background:var(--cream);
-    color:var(--ruby-deep);
-    font-size:0.83rem;
-    letter-spacing:0.03em;
-    padding:11px 0;
-    border-radius:30px;
-    text-align:center;
-    opacity:0;
-    transform:translateY(8px);
-    transition:all .25s ease;
-    box-shadow:var(--shadow);
-    pointer-events:none;
-    z-index:3;
-  }
-  .product-card:hover .add-to-cart-btn{opacity:1; transform:translateY(0); pointer-events:auto;}
-  .add-to-cart-btn:hover{background:var(--ruby); color:#fff;}
-
   .product-info{padding:0 4px;}
   .product-cat{
     font-size:0.72rem;
@@ -385,53 +366,134 @@
     font-size:0.85rem;
   }
 
-  .selector-row{
+  /* ---------- تفاصيل المنتج (مودال) ---------- */
+  .product-modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(61,43,46,0.6);
+    z-index:300;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0; pointer-events:none;
+    transition:opacity 0.3s;
+  }
+  .product-modal-overlay.show{
+    opacity:1; pointer-events:auto;
+  }
+  .product-modal{
+    background:var(--cream);
+    border-radius:28px;
+    max-width:900px;
+    width:90%;
+    max-height:90vh;
+    overflow-y:auto;
+    display:flex;
+    flex-wrap:wrap;
+    box-shadow:0 20px 50px rgba(0,0,0,0.3);
+    position:relative;
+  }
+  .modal-close{
+    position:absolute;
+    top:16px; right:16px;
+    width:36px; height:36px;
+    border-radius:50%;
+    background:var(--blush-deep);
+    display:flex; align-items:center; justify-content:center;
+    z-index:5;
+    transition:background .2s;
+    cursor:pointer;
+    border:none;
+  }
+  .modal-close:hover{background:var(--rose-soft);}
+  .modal-img-col{
+    flex:1 1 400px;
+    padding:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--blush-deep);
+    border-radius:28px 0 0 28px;
+  }
+  .modal-img-col img{
+    width:100%;
+    max-height:500px;
+    object-fit:cover;
+    border-radius:18px;
+  }
+  .modal-info-col{
+    flex:1 1 300px;
+    padding:32px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .modal-info-col h2{
+    font-size:2rem;
+    font-style:italic;
+    color:var(--ruby-deep);
+  }
+  .modal-cat{
+    font-size:0.8rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--rose);
+  }
+  .modal-price{
+    font-size:1.3rem;
     display:flex;
     align-items:center;
     gap:12px;
-    margin-top:10px;
+  }
+  .modal-price .current{color:var(--ruby-deep); font-weight:500;}
+  .modal-price .old{text-decoration:line-through; opacity:0.5; font-size:1rem;}
+  .modal-colors{
+    display:flex;
+    gap:12px;
     flex-wrap:wrap;
   }
-  .size-select{
+  .modal-color-swatch{
+    width:34px; height:34px;
+    border-radius:50%;
+    border:3px solid transparent;
+    cursor:pointer;
+    transition:transform 0.15s, border-color 0.15s;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+  }
+  .modal-color-swatch.selected{
+    border-color:var(--ruby);
+    transform:scale(1.15);
+  }
+  .modal-size-label{
+    font-weight:500;
+    margin-bottom:6px;
+  }
+  .modal-size-select{
     font-family:'Jost',sans-serif;
-    font-size:0.82rem;
-    padding:4px 10px;
+    padding:10px 14px;
     border:1px solid var(--line);
     border-radius:14px;
     background:var(--cream);
     color:var(--ink);
     cursor:pointer;
-    min-width:90px;
+    font-size:0.95rem;
   }
-  .size-label{
-    font-size:0.82rem;
-    opacity:0.7;
-  }
-
-  .swatch-row{
-    display:flex;
-    gap:6px;
-    align-items:center;
-    flex-wrap:wrap;
-  }
-  .mini-swatch{
-    width:18px;height:18px;
-    border-radius:50%;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+  .modal-add-to-cart{
+    background:var(--ruby);
+    color:#fff;
+    padding:14px 0;
+    border-radius:30px;
+    font-size:1rem;
+    letter-spacing:0.02em;
+    transition:background .2s;
+    margin-top:10px;
+    border:none;
     cursor:pointer;
-    border:2px solid transparent;
-    transition:transform 0.15s, border-color 0.15s;
-    padding:0;
-    background:none;
   }
-  .mini-swatch.selected{
-    border-color:var(--ruby);
-    transform:scale(1.15);
-  }
-  .mini-swatch.unavailable{
-    opacity:0.3;
-    pointer-events:none;
-    cursor:not-allowed;
+  .modal-add-to-cart:hover{background:var(--ruby-deep);}
+  .modal-sold-out{
+    font-size:1.1rem;
+    color:var(--ink);
+    opacity:0.6;
   }
 
   .empty-state{
@@ -601,16 +663,6 @@
     opacity:0.7;
     margin-top:4px;
   }
-  .color-select{
-    font-family:'Jost',sans-serif;
-    font-size:0.8rem;
-    margin-top:6px;
-    padding:4px 8px;
-    border:1px solid var(--line);
-    border-radius:14px;
-    background:var(--blush);
-    color:var(--ink);
-  }
   .qty-btn{
     width:22px;height:22px;
     border:1px solid var(--line);
@@ -714,6 +766,13 @@
     .page-head h1{font-size:2.2rem;}
     .trust-inner{grid-template-columns:repeat(2,1fr);}
     .footer-inner{grid-template-columns:1fr;}
+    .product-modal{
+      flex-direction:column;
+      max-height:95vh;
+    }
+    .modal-img-col{
+      border-radius:28px 28px 0 0;
+    }
   }
 
   @media (max-width:560px){
@@ -772,13 +831,11 @@
 </div>
 
 <div class="shop-wrap">
-
   <aside class="sidebar" id="sidebar">
     <div class="filter-block">
       <h3>Category</h3>
       <ul class="filter-list" id="categoryList"></ul>
     </div>
-
     <div class="filter-block">
       <h3>Price</h3>
       <div class="price-range">
@@ -786,7 +843,6 @@
         <div class="vals"><span>50 EGP</span><span id="priceMax">700 EGP</span></div>
       </div>
     </div>
-
     <div class="filter-block">
       <h3>Availability</h3>
       <ul class="filter-list">
@@ -808,7 +864,6 @@
         </select>
       </div>
     </div>
-
     <div class="product-grid" id="productGrid"></div>
   </main>
 </div>
@@ -857,6 +912,33 @@
   <div class="footer-bottom">© Rubies 2026 — All rights reserved. No refunds, all sales final.</div>
 </footer>
 
+<!-- مودال تفاصيل المنتج -->
+<div class="product-modal-overlay" id="productModalOverlay">
+  <div class="product-modal" id="productModal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-img-col">
+      <img id="modalImg" src="" alt="Product Image">
+    </div>
+    <div class="modal-info-col">
+      <div class="modal-cat" id="modalCat"></div>
+      <h2 id="modalName"></h2>
+      <div class="modal-price" id="modalPrice"></div>
+      <div>
+        <div class="modal-size-label">Select Size</div>
+        <select class="modal-size-select" id="modalSizeSelect"></select>
+      </div>
+      <div>
+        <div class="modal-size-label">Select Color</div>
+        <div class="modal-colors" id="modalColorSwatches"></div>
+      </div>
+      <div id="modalAddSection">
+        <button class="modal-add-to-cart" id="modalAddToCartBtn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- أوفرلاي العربة -->
 <div class="overlay" id="overlay"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-head">
@@ -913,10 +995,8 @@ function ph(seed, c1, c2){
     </svg>`);
 }
 
-/* ============ PRODUCTS مع colorImages ============ */
 const PRODUCTS = [
-  {
-    id:1, name:'Circle Bag', cat:'Shoulder bag', price:300, oldPrice:350,
+  { id:1, name:'Circle Bag', cat:'Shoulder bag', price:300, oldPrice:350,
     colors:[0,1,2,3,4,5,6,7,8,9], sizes:['One size'],
     img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png',
     colorImages: {
@@ -933,8 +1013,7 @@ const PRODUCTS = [
     },
     badge:'New', date:1
   },
-  {
-    id:2, name:'Mini Shoulder Bag', cat:'Shoulder bag', price:280, oldPrice:350,
+  { id:2, name:'Mini Shoulder Bag', cat:'Shoulder bag', price:280, oldPrice:350,
     colors:[1,9], sizes:['S 150 cm', 'M 170 cm'],
     img: ph(2,'#d5c3a5','#f5f5f5'),
     colorImages: {
@@ -943,8 +1022,7 @@ const PRODUCTS = [
     },
     badge:'Sale', date:2
   },
-  {
-    id:3, name:'Crossbody Red', cat:'Cross bag', price:890, oldPrice:null,
+  { id:3, name:'Crossbody Red', cat:'Cross bag', price:890, oldPrice:null,
     colors:[0,4], sizes:['S','M'],
     img: ph(3,'#d43d3d','#1a1a1a'),
     colorImages: {
@@ -953,8 +1031,7 @@ const PRODUCTS = [
     },
     badge:'Best Seller', date:3
   },
-  {
-    id:4, name:'Denim Blue Cross', cat:'Cross bag', price:1250, oldPrice:null,
+  { id:4, name:'Denim Blue Cross', cat:'Cross bag', price:1250, oldPrice:null,
     colors:[1,5], sizes:['One size'],
     img: ph(4,'#f5f5f5','#4a7ebd'),
     colorImages: {
@@ -963,8 +1040,7 @@ const PRODUCTS = [
     },
     badge:null, date:4
   },
-  {
-    id:5, name:'Pink Clutch', cat:'Clutch', price:690, oldPrice:null,
+  { id:5, name:'Pink Clutch', cat:'Clutch', price:690, oldPrice:null,
     colors:[8,1], sizes:['One size'],
     img: ph(5,'#f0a5c0','#f5f5f5'),
     colorImages: {
@@ -973,8 +1049,7 @@ const PRODUCTS = [
     },
     badge:null, date:5
   },
-  {
-    id:6, name:'Beige Clutch', cat:'Clutch', price:420, oldPrice:480,
+  { id:6, name:'Beige Clutch', cat:'Clutch', price:420, oldPrice:480,
     colors:[9,7], sizes:['One size'],
     img: ph(6,'#d5c3a5','#f5d547'),
     colorImages: {
@@ -983,15 +1058,13 @@ const PRODUCTS = [
     },
     badge:'Sale', date:6
   },
-  {
-    id:7, name:'Purple Hat', cat:'Hats', price:550, oldPrice:null,
+  { id:7, name:'Purple Hat', cat:'Hats', price:550, oldPrice:null,
     colors:[6], sizes:['One size'],
     img: ph(7,'#8b5cf6','#1a1a1a'),
     colorImages: { 6: 'https://via.placeholder.com/500x590/8b5cf6/fff?text=Purple+Hat' },
     badge:'Sold Out', date:7, soldOut:true
   },
-  {
-    id:8, name:'Summer Hat', cat:'Hats', price:300, oldPrice:null,
+  { id:8, name:'Summer Hat', cat:'Hats', price:300, oldPrice:null,
     colors:[0,1,4,5], sizes:['Adjustable'],
     img: ph(8,'#f5f5f5','#4a7ebd'),
     colorImages: {
@@ -1002,15 +1075,13 @@ const PRODUCTS = [
     },
     badge:null, date:8
   },
-  {
-    id:9, name:'Orange Strap', cat:'Phone strap', price:280, oldPrice:null,
+  { id:9, name:'Orange Strap', cat:'Phone strap', price:280, oldPrice:null,
     colors:[3], sizes:['One size'],
     img: ph(9,'#ff8c42','#f5d547'),
     colorImages: { 3: 'https://via.placeholder.com/500x590/ff8c42/fff?text=Orange+Strap' },
     badge:null, date:9
   },
-  {
-    id:10, name:'Pink Strap', cat:'Phone strap', price:320, oldPrice:360,
+  { id:10, name:'Pink Strap', cat:'Phone strap', price:320, oldPrice:360,
     colors:[8,2], sizes:['One size'],
     img: ph(10,'#f0a5c0','#ff69b4'),
     colorImages: {
@@ -1032,6 +1103,7 @@ let cart = [];
 const announceMsgs = ['ads ads ads', 'ads ads ads', 'ads ads ads', 'ads ads ads'];
 document.getElementById('announceTrack').innerHTML = [...announceMsgs, ...announceMsgs].map(m => `<span>${m}</span>`).join('');
 
+// ---------- دوال الفلاتر والقائمة ----------
 function renderCategories(){
   const list = document.getElementById('categoryList');
   const all = ['All', ...CATEGORIES];
@@ -1089,7 +1161,7 @@ function bagName(p){
   return p.name || `Bag ${p.id}`;
 }
 
-/* ============ RENDER PRODUCTS (مع تغيير الصور) ============ */
+/* ---------- عرض المنتجات في الجريد (بدون أزرار اختيارات) ---------- */
 function renderProducts(){
   const grid = document.getElementById('productGrid');
   const list = getFiltered();
@@ -1103,24 +1175,6 @@ function renderProducts(){
   }
 
   grid.innerHTML = list.map(p => {
-    // الصورة الأولية: إما صورة اللون الأول إن وجدت، أو الصورة الافتراضية
-    const firstColorIndex = p.colors[0];
-    const initialImg = (p.colorImages && p.colorImages[firstColorIndex]) || p.img;
-
-    const swatches = p.colors.map((colorIdx, idx) => {
-      const isFirst = idx === 0;
-      return `<button class="mini-swatch color-opt ${isFirst ? 'selected' : ''}" data-color="${colorIdx}" style="background:${COLORS[colorIdx].hex}" title="${COLORS[colorIdx].name}"></button>`;
-    }).join('');
-
-    let sizeHtml = '';
-    if(p.sizes.length > 1){
-      sizeHtml = `<select class="size-select" data-id="${p.id}">
-        ${p.sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
-      </select>`;
-    } else {
-      sizeHtml = `<span class="size-label">Size: ${p.sizes[0]}</span>`;
-    }
-
     const badge = p.badge ? `<span class="badge ${p.soldOut?'sold-out':''}">${p.badge}</span>` : '';
     const priceHtml = p.soldOut
       ? `<span class="price-old">Currently unavailable</span>`
@@ -1130,68 +1184,108 @@ function renderProducts(){
       <article class="product-card" data-id="${p.id}">
         <div class="product-img-wrap">
           ${badge}
-          <img src="${initialImg}" alt="${bagName(p)}" loading="lazy" class="main-product-img">
-          ${!p.soldOut ? `<button class="add-to-cart-btn">Add to Cart</button>` : ''}
+          <img src="${p.img}" alt="${bagName(p)}" loading="lazy">
         </div>
         <div class="product-info">
           <div class="product-cat">${p.cat}</div>
           <h3 class="product-title">${bagName(p)}</h3>
           <div class="product-price">${priceHtml}</div>
-          <div class="selector-row">
-            <div class="swatch-row">${swatches}</div>
-            ${sizeHtml}
-          </div>
         </div>
-        <div class="product-data" style="display:none;" data-color-images='${JSON.stringify(p.colorImages || {})}' data-default-img="${p.img}"></div>
       </article>`;
   }).join('');
 
-  // تغيير الصورة عند النقر على اللون
-  grid.querySelectorAll('.color-opt').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const card = btn.closest('.product-card');
-      card.querySelectorAll('.color-opt').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-
-      const colorIdx = parseInt(btn.dataset.color);
-      const imgElement = card.querySelector('.main-product-img');
-      const dataDiv = card.querySelector('.product-data');
-      const colorImages = JSON.parse(dataDiv.dataset.colorImages || '{}');
-      const defaultImg = dataDiv.dataset.defaultImg;
-
-      imgElement.src = colorImages[colorIdx] || defaultImg;
-    });
-  });
-
-  // زر الإضافة للسلة (مع الصورة الحالية)
-  grid.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const card = btn.closest('.product-card');
+  // عند الضغط على أي كارد (غير المباع) يفتح المودال
+  grid.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', () => {
       const id = parseInt(card.dataset.id);
       const product = PRODUCTS.find(p => p.id === id);
-      if(!product || product.soldOut) return;
-
-      const selectedColorBtn = card.querySelector('.color-opt.selected');
-      const colorIdx = selectedColorBtn ? parseInt(selectedColorBtn.dataset.color) : product.colors[0];
-      const colorName = COLORS[colorIdx].name;
-
-      let size = 'One size';
-      const sizeSelect = card.querySelector('.size-select');
-      if(sizeSelect){
-        size = sizeSelect.value;
-      } else {
-        size = product.sizes[0];
-      }
-
-      const currentImgSrc = card.querySelector('.main-product-img').src;
-      addToCart(id, size, colorName, currentImgSrc);
+      if(product && !product.soldOut) openProductModal(product);
     });
   });
 }
 
-/* ============ ADD TO CART (مع الصورة) ============ */
+/* ---------- مودال التفاصيل ---------- */
+let currentModalProduct = null;
+let currentModalSelectedColor = 0;
+
+function openProductModal(product){
+  currentModalProduct = product;
+  // اللون المختار الافتراضي أول لون في المصفوفة
+  currentModalSelectedColor = product.colors[0];
+  
+  document.getElementById('modalCat').textContent = product.cat;
+  document.getElementById('modalName').textContent = bagName(product);
+  
+  const priceHtml = product.oldPrice 
+    ? `<span class="current">${product.price.toLocaleString('en-US')} EGP</span> <span class="old">${product.oldPrice.toLocaleString('en-US')} EGP</span>`
+    : `<span class="current">${product.price.toLocaleString('en-US')} EGP</span>`;
+  document.getElementById('modalPrice').innerHTML = priceHtml;
+  
+  // المقاسات
+  const sizeSelect = document.getElementById('modalSizeSelect');
+  sizeSelect.innerHTML = product.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
+  if(product.sizes.length === 1) sizeSelect.disabled = true;
+  else sizeSelect.disabled = false;
+  
+  // السواتشات
+  const colorContainer = document.getElementById('modalColorSwatches');
+  colorContainer.innerHTML = product.colors.map(colorIdx => {
+    const selectedClass = colorIdx === currentModalSelectedColor ? 'selected' : '';
+    return `<button class="modal-color-swatch ${selectedClass}" style="background:${COLORS[colorIdx].hex}" data-color="${colorIdx}" title="${COLORS[colorIdx].name}"></button>`;
+  }).join('');
+  
+  // الصورة الافتراضية
+  updateModalImage();
+  
+  // إخفاء/إظهار زر الإضافة
+  document.getElementById('modalAddSection').style.display = 'block';
+  
+  // إظهار المودال
+  document.getElementById('productModalOverlay').classList.add('show');
+  
+  // إضافة مستمعي الأحداث (نستخدم delegation لتجنب التراكم)
+  colorContainer.querySelectorAll('.modal-color-swatch').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const colorIdx = parseInt(btn.dataset.color);
+      currentModalSelectedColor = colorIdx;
+      // تحديث الكلاسات
+      colorContainer.querySelectorAll('.modal-color-swatch').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      updateModalImage();
+    });
+  });
+}
+
+function updateModalImage(){
+  const img = document.getElementById('modalImg');
+  const product = currentModalProduct;
+  const colorIdx = currentModalSelectedColor;
+  const colorImages = product.colorImages || {};
+  img.src = colorImages[colorIdx] || product.img;
+}
+
+// إغلاق المودال
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('productModalOverlay').classList.remove('show');
+});
+document.getElementById('productModalOverlay').addEventListener('click', (e) => {
+  if(e.target === e.currentTarget) document.getElementById('productModalOverlay').classList.remove('show');
+});
+
+// زر الإضافة من داخل المودال
+document.getElementById('modalAddToCartBtn').addEventListener('click', () => {
+  const product = currentModalProduct;
+  const sizeSelect = document.getElementById('modalSizeSelect');
+  const size = sizeSelect.value;
+  const colorName = COLORS[currentModalSelectedColor].name;
+  const currentImg = document.getElementById('modalImg').src;
+  
+  addToCart(product.id, size, colorName, currentImg);
+  // ممكن نقفل المودال بعد الإضافة
+  document.getElementById('productModalOverlay').classList.remove('show');
+});
+
+/* ---------- إضافة للسلة ---------- */
 function addToCart(productId, size, color, imageSrc){
   const product = PRODUCTS.find(p => p.id === productId);
   if(!product || product.soldOut) return;
