@@ -53,10 +53,9 @@
 
   input,select,textarea,button{
     color-scheme:light;
-    font-size:16px; /* keeps iOS Safari from auto-zooming on focus */
+    font-size:16px;
   }
 
-  /* === STITCH MOTIF === */
   .stitch{
     height:10px;
     width:100%;
@@ -68,9 +67,6 @@
     opacity:0.45;
   }
 
-  /* === ANNOUNCEMENT BAR ===
-     HOW TO EDIT: change the text inside the announceMsgs array
-     near the top of the <script> block at the bottom of this file. */
   .announce{
     background:var(--ruby);
     color:var(--cream);
@@ -93,7 +89,6 @@
     100%{transform:translateX(-50%);}
   }
 
-  /* === HEADER === */
   header{
     background:var(--cream);
     position:sticky;
@@ -120,30 +115,6 @@
     gap:6px;
   }
   .logo .dot{color:var(--gold); font-size:1rem;}
-  nav.main-nav{
-    display:flex;
-    gap:34px;
-    font-size:0.95rem;
-    letter-spacing:0.01em;
-  }
-  nav.main-nav a{
-    position:relative;
-    padding:4px 0;
-    color:var(--ink);
-    transition:color .2s;
-  }
-  nav.main-nav a.active{color:var(--ruby);}
-  nav.main-nav a::after{
-    content:'';
-    position:absolute;
-    bottom:-3px; left:0; right:0;
-    height:2px;
-    background:var(--ruby);
-    transform:scaleX(0);
-    transform-origin:center;
-    transition:transform .25s ease;
-  }
-  nav.main-nav a:hover::after, nav.main-nav a.active::after{transform:scaleX(1);}
 
   .header-icons{
     display:flex;
@@ -173,7 +144,6 @@
 
   .mobile-toggle{display:none;}
 
-  /* === BREADCRUMB / PAGE HEAD === */
   .page-head{
     max-width:1280px;
     margin:0 auto;
@@ -207,7 +177,6 @@
     margin:22px auto 0;
   }
 
-  /* === NO REFUND NOTICE === */
   .no-refund-banner{
     max-width:1280px;
     margin:0 auto 32px;
@@ -224,7 +193,6 @@
     color:var(--ruby-deep);
   }
 
-  /* === LAYOUT === */
   .shop-wrap{
     max-width:1280px;
     margin:0 auto;
@@ -234,7 +202,6 @@
     gap:44px;
   }
 
-  /* === SIDEBAR === */
   .sidebar{
     align-self:start;
   }
@@ -295,29 +262,6 @@
     opacity:0.7;
   }
 
-  .color-swatches{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-  .swatch{
-    width:28px;height:28px;
-    border-radius:50%;
-    border:2px solid transparent;
-    cursor:pointer;
-    transition:transform .15s, border-color .15s;
-    position:relative;
-  }
-  .swatch.active{border-color:var(--ruby); transform:scale(1.12);}
-  .swatch::after{
-    content:'';
-    position:absolute;
-    inset:3px;
-    border-radius:50%;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08);
-  }
-
-  /* === MAIN PRODUCT AREA === */
   .toolbar{
     display:flex;
     align-items:center;
@@ -392,7 +336,7 @@
   }
   .badge.sold-out{background:var(--ink); opacity:0.7;}
 
-  .quick-add{
+  .add-to-cart-btn{
     position:absolute;
     bottom:12px; left:12px; right:12px;
     background:var(--cream);
@@ -406,9 +350,11 @@
     transform:translateY(8px);
     transition:all .25s ease;
     box-shadow:var(--shadow);
+    pointer-events:none;
+    z-index:3;
   }
-  .product-card:hover .quick-add{opacity:1; transform:translateY(0);}
-  .quick-add:hover{background:var(--ruby); color:#fff;}
+  .product-card:hover .add-to-cart-btn{opacity:1; transform:translateY(0); pointer-events:auto;}
+  .add-to-cart-btn:hover{background:var(--ruby); color:#fff;}
 
   .product-info{padding:0 4px;}
   .product-cat{
@@ -436,18 +382,55 @@
     opacity:0.45;
     font-size:0.85rem;
   }
+
+  .selector-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  .size-select{
+    font-family:'Jost',sans-serif;
+    font-size:0.82rem;
+    padding:4px 10px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:var(--cream);
+    color:var(--ink);
+    cursor:pointer;
+    min-width:90px;
+  }
+  .size-label{
+    font-size:0.82rem;
+    opacity:0.7;
+  }
+
   .swatch-row{
     display:flex;
     gap:6px;
-    margin-top:9px;
+    align-items:center;
   }
   .mini-swatch{
-    width:15px;height:15px;
+    width:18px;height:18px;
     border-radius:50%;
     box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:transform 0.15s, border-color 0.15s;
+    padding:0;
+    background:none;
+  }
+  .mini-swatch.selected{
+    border-color:var(--ruby);
+    transform:scale(1.15);
+  }
+  .mini-swatch.unavailable{
+    opacity:0.3;
+    pointer-events:none;
+    cursor:not-allowed;
   }
 
-  /* === EMPTY STATE === */
   .empty-state{
     grid-column:1/-1;
     text-align:center;
@@ -466,7 +449,6 @@
   }
   .empty-state p{opacity:0.6; font-size:0.92rem;}
 
-  /* === TRUST STRIP === */
   .trust-strip{
     background:var(--cream);
     border-top:1px solid var(--line);
@@ -497,7 +479,6 @@
   .trust-item h4{font-size:0.92rem;font-weight:500;margin-bottom:2px;}
   .trust-item p{font-size:0.78rem;opacity:0.6;}
 
-  /* === FOOTER === */
   footer{
     background:var(--ruby-deep);
     color:var(--blush);
@@ -507,7 +488,7 @@
     max-width:1280px;
     margin:0 auto;
     display:grid;
-    grid-template-columns:1.4fr 1fr 1fr;
+    grid-template-columns:1.4fr 1fr;
     gap:40px;
   }
   .footer-inner h4{
@@ -551,7 +532,6 @@
     opacity:0.6;
   }
 
-  /* === CART DRAWER === */
   .overlay{
     position:fixed; inset:0;
     background:rgba(61,43,46,0.4);
@@ -613,6 +593,11 @@
     display:flex;align-items:center;gap:10px;
     margin-top:8px;
   }
+  .cart-item-info .variant{
+    font-size:0.78rem;
+    opacity:0.7;
+    margin-top:4px;
+  }
   .color-select{
     font-family:'Jost',sans-serif;
     font-size:0.8rem;
@@ -622,11 +607,6 @@
     border-radius:14px;
     background:var(--blush);
     color:var(--ink);
-  }
-  .color-fixed{
-    font-size:0.78rem;
-    opacity:0.65;
-    margin-top:6px;
   }
   .qty-btn{
     width:22px;height:22px;
@@ -708,7 +688,6 @@
   .mobile-filter-toggle{display:none;}
 
   @media (max-width:980px){
-    nav.main-nav{display:none;}
     .header-icons{gap:12px;}
     .mobile-toggle{
       display:flex;width:38px;height:38px;align-items:center;justify-content:center;
@@ -731,7 +710,7 @@
     .product-grid{grid-template-columns:repeat(2,1fr);}
     .page-head h1{font-size:2.2rem;}
     .trust-inner{grid-template-columns:repeat(2,1fr);}
-    .footer-inner{grid-template-columns:1fr 1fr;}
+    .footer-inner{grid-template-columns:1fr;}
   }
 
   @media (max-width:560px){
@@ -739,7 +718,6 @@
     .header-inner{padding:14px 18px;}
     .logo{font-size:1.5rem;}
     .page-head{padding:36px 18px 18px;}
-    .footer-inner{grid-template-columns:1fr;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -754,14 +732,10 @@
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR
-     HOW TO EDIT: scroll to the <script> section at the bottom, find
-     "const announceMsgs" and change the text in that array. -->
 <div class="announce">
   <div class="announce-track" id="announceTrack"></div>
 </div>
 
-<!-- HEADER -->
 <header>
   <div class="header-inner">
     <button class="mobile-toggle" id="mobileFilterOpen" aria-label="Menu">
@@ -770,16 +744,7 @@
 
     <a href="#" class="logo">Rubies<span class="dot">•</span></a>
 
-    <!-- MAIN NAV — symbols only, no category names, per request -->
-    <nav class="main-nav">
-      <a href="#" class="active">●</a>
-      <a href="#">◆</a>
-      <a href="#">▲</a>
-      <a href="#">✦</a>
-    </nav>
-
     <div class="header-icons">
-      <!-- search + account icons removed per request -->
       <button class="icon-btn" id="cartBtn" aria-label="Cart">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 7h14l-1.5 9.5a2 2 0 01-2 1.5H8.7a2 2 0 01-2-1.6L4.5 4H2"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>
         <span class="cart-count" id="cartCount">0</span>
@@ -788,7 +753,6 @@
   </div>
 </header>
 
-<!-- PAGE HEAD -->
 <div class="page-head">
   <div class="breadcrumb">
     <a href="#">Home</a> &nbsp;/&nbsp; <span id="breadcrumbCat">Shop</span>
@@ -798,15 +762,12 @@
   <div class="head-stitch stitch"></div>
 </div>
 
-<!-- NO REFUND NOTICE -->
 <div class="no-refund-banner">
   <div class="inner">All sales are final — no refunds. Exchanges may be available, please contact us via WhatsApp before ordering if you have questions.</div>
 </div>
 
-<!-- SHOP LAYOUT -->
 <div class="shop-wrap">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="filter-block">
       <h3>Category</h3>
@@ -822,11 +783,6 @@
     </div>
 
     <div class="filter-block">
-      <h3>Color</h3>
-      <div class="color-swatches" id="colorSwatches"></div>
-    </div>
-
-    <div class="filter-block">
       <h3>Availability</h3>
       <ul class="filter-list">
         <li><button class="filter-toggle active" data-stock="all">All <span class="count" id="cntAll"></span></button></li>
@@ -835,7 +791,6 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main>
     <div class="toolbar">
       <div class="result-count" id="resultCount"></div>
@@ -853,7 +808,6 @@
   </main>
 </div>
 
-<!-- TRUST STRIP -->
 <div class="trust-strip">
   <div class="trust-inner">
     <div class="trust-item">
@@ -875,7 +829,6 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div>
@@ -883,28 +836,22 @@
       <p class="desc">Handmade bags with a simple design and a quiet, feminine touch. Every piece is made with care and attention to the smallest details.</p>
       <p class="no-refund">No refunds — all sales are final.</p>
       <div class="social-row">
-        <!-- HOW TO EDIT: replace the href="#" below with your real profile links -->
         <a href="https://www.instagram.com/_rubies___?igsh=MW0xcTQwemIwMzNmdg==" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
         <a href="https://www.facebook.com/share/g/1Cj1AfeCP5/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M14 9h3V6h-3a3 3 0 00-3 3v2H8v3h3v6h3v-6h2.5l.5-3H14V9z"/></svg></a>
         <a href="https://www.tiktok.com/@rubies.eg?_r=1&_t=ZS-97ZFW5lmkT6" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 12a4 4 0 104 4V4a4 4 0 004 4"/></svg></a>
       </div>
     </div>
     <div>
-      <h4>Shop</h4>
-      <ul id="footerCategoryList"></ul>
-    </div>
-    <div>
       <h4>Contact</h4>
       <ul>
-        <li><a href="#">WhatsApp: 010xxxxxxxx</a></li>
-        <li><a href="#">Alexandria, Egypt</a></li>
+        <li>WhatsApp: 010xxxxxxxx</li>
+        <li>Alexandria, Egypt</li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">© Rubies 2026 — All rights reserved. No refunds, all sales final.</div>
 </footer>
 
-<!-- CART OVERLAY + DRAWER -->
 <div class="overlay" id="overlay"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-head">
@@ -931,21 +878,8 @@
 </div>
 
 <script>
-/* ===========================================================
-   CATEGORIES / PARTITIONS
-   HOW TO ADD A NEW PARTITION (e.g. a new bag type, or any new
-   item type like jewelry, accessories, etc.):
-   just add a new string to this array. The sidebar filter,
-   footer "Shop" list, and product category labels will all
-   update automatically — no other code needs to change.
-   =========================================================== */
 const CATEGORIES = ['Waist Bags', 'Shoulder Bags', 'Cross Bags', 'Wallets', 'Accessories'];
-// To add more partitions later, e.g. jewelry or scarves, simply do:
-// const CATEGORIES = ['Waist Bags', 'Shoulder Bags', 'Cross Bags', 'Wallets', 'Accessories', 'Jewelry', 'Scarves'];
 
-/* ===========================================================
-   COLORS — add or remove available colors here
-   =========================================================== */
 const COLORS = [
   {name:'Light Pink', hex:'#EFC0C6'},
   {name:'Beige', hex:'#E3CBB4'},
@@ -955,7 +889,6 @@ const COLORS = [
 ];
 
 function ph(seed, c1, c2){
-  // placeholder gradient image generator — replace with real product photos later
   return `data:image/svg+xml;utf8,` + encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" width="500" height="590">
       <defs>
@@ -970,42 +903,29 @@ function ph(seed, c1, c2){
     </svg>`);
 }
 
-/* ===========================================================
-   PRODUCTS
-   HOW TO ADD A NEW PRODUCT: copy one of the objects below and
-   change id (must be unique), cat (must match a CATEGORIES
-   entry exactly), price, colors (indexes into COLORS above),
-   and img (swap ph(...) for a real image URL once you have photos).
-   title is auto-generated as "Bag N" — see renderProducts() below.
-   =========================================================== */
 const PRODUCTS = [
-  {id:1, cat:'Waist Bags', price:850, oldPrice:null, colors:[0,1,2], img:ph(1,'#F8E3E6','#EFC0C6'), badge:'Best Seller', date:5},
-  {id:2, cat:'Waist Bags', price:780, oldPrice:950, colors:[1,3], img:ph(2,'#F0E5D8','#E3CBB4'), badge:'Sale', date:2},
-  {id:3, cat:'Waist Bags', price:920, oldPrice:null, colors:[2,0], img:ph(3,'#E9C6CB','#C98A93'), badge:null, date:8},
-  {id:4, cat:'Shoulder Bags', price:1250, oldPrice:null, colors:[3,4], img:ph(4,'#FFF8F4','#E3CBB4'), badge:'New', date:1},
-  {id:5, cat:'Cross Bags', price:690, oldPrice:null, colors:[0,3], img:ph(5,'#F8E3E6','#FFFDFB'), badge:null, date:11},
-  {id:6, cat:'Wallets', price:420, oldPrice:480, colors:[1,4], img:ph(6,'#EADFCB','#A9806B'), badge:'Sale', date:14},
-  {id:7, cat:'Waist Bags', price:0, oldPrice:null, colors:[2], img:ph(7,'#E9C6CB','#A9806B'), badge:'Sold Out', date:20, soldOut:true},
-  {id:8, cat:'Shoulder Bags', price:1100, oldPrice:null, colors:[0,1,2,3], img:ph(8,'#F0E5D8','#EFC0C6'), badge:null, date:3},
-  {id:9, cat:'Accessories', price:280, oldPrice:null, colors:[4], img:ph(9,'#E3CBB4','#A9806B'), badge:null, date:9},
+  { id:1, cat:'Waist Bags', price:850, oldPrice:null, colors:[0,1,2], sizes:['S','M','L'], img:ph(1,'#F8E3E6','#EFC0C6'), badge:'Best Seller', date:5 },
+  { id:2, cat:'Waist Bags', price:780, oldPrice:950, colors:[1,3], sizes:['S','M'], img:ph(2,'#F0E5D8','#E3CBB4'), badge:'Sale', date:2 },
+  { id:3, cat:'Waist Bags', price:920, oldPrice:null, colors:[2,0], sizes:['S','M','L'], img:ph(3,'#E9C6CB','#C98A93'), badge:null, date:8 },
+  { id:4, cat:'Shoulder Bags', price:1250, oldPrice:null, colors:[3,4], sizes:['One size'], img:ph(4,'#FFF8F4','#E3CBB4'), badge:'New', date:1 },
+  { id:5, cat:'Cross Bags', price:690, oldPrice:null, colors:[0,3], sizes:['One size'], img:ph(5,'#F8E3E6','#FFFDFB'), badge:null, date:11 },
+  { id:6, cat:'Wallets', price:420, oldPrice:480, colors:[1,4], sizes:['One size'], img:ph(6,'#EADFCB','#A9806B'), badge:'Sale', date:14 },
+  { id:7, cat:'Waist Bags', price:0, oldPrice:null, colors:[2], sizes:['S','M'], img:ph(7,'#E9C6CB','#A9806B'), badge:'Sold Out', date:20, soldOut:true },
+  { id:8, cat:'Shoulder Bags', price:1100, oldPrice:null, colors:[0,1,2,3], sizes:['S','M','L'], img:'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png', badge:null, date:3 },
+  { id:9, cat:'Accessories', price:280, oldPrice:null, colors:[4], sizes:['One size'], img:ph(9,'#E3CBB4','#A9806B'), badge:null, date:9 },
 ];
 
-/* ============ STATE ============ */
 let state = {
   category: '',
   maxPrice: 2200,
-  color: null,
   stock: 'all',
   sort: 'featured',
 };
 let cart = [];
 
-/* ============ RENDER: ANNOUNCEMENT BAR ============
-   HOW TO EDIT: change the strings in this array. */
-const announceMsgs = ['ads ads ads', 'ads ads ads', 'ads ads ads', 'ads ads ads'];
+const announceMsgs = ['Free delivery on orders over 1,500 EGP.', 'Free delivery on orders over 1,500 EGP.', 'Free delivery on orders over 1,500 EGP.', 'Free delivery on orders over 1,500 EGP.'];
 document.getElementById('announceTrack').innerHTML = [...announceMsgs, ...announceMsgs].map(m => `<span>${m}</span>`).join('');
 
-/* ============ RENDER: SIDEBAR ============ */
 function renderCategories(){
   const list = document.getElementById('categoryList');
   const all = ['All', ...CATEGORIES];
@@ -1022,23 +942,6 @@ function renderCategories(){
       renderCategories();
       renderProducts();
       if(window.innerWidth <= 980) closeMobileFilter();
-    });
-  });
-
-  // footer "Shop" list mirrors the same categories automatically
-  const footerList = document.getElementById('footerCategoryList');
-  footerList.innerHTML = ['All Bags', ...CATEGORIES].map(cat => `<li><a href="#">${cat}</a></li>`).join('');
-}
-
-function renderColorSwatches(){
-  const wrap = document.getElementById('colorSwatches');
-  wrap.innerHTML = COLORS.map((c,i) => `<button class="swatch ${state.color===i?'active':''}" style="background:${c.hex}" data-idx="${i}" title="${c.name}" aria-label="${c.name}"></button>`).join('');
-  wrap.querySelectorAll('.swatch').forEach(sw => {
-    sw.addEventListener('click', () => {
-      const idx = parseInt(sw.dataset.idx);
-      state.color = state.color === idx ? null : idx;
-      renderColorSwatches();
-      renderProducts();
     });
   });
 }
@@ -1063,12 +966,10 @@ document.getElementById('sortSelect').addEventListener('change', e => {
   renderProducts();
 });
 
-/* ============ RENDER: PRODUCT GRID ============ */
 function getFiltered(){
   let list = PRODUCTS.filter(p => {
     if(state.category && p.cat !== state.category) return false;
     if(p.price > state.maxPrice && !p.soldOut) return false;
-    if(state.color !== null && !p.colors.includes(state.color)) return false;
     if(state.stock === 'in' && p.soldOut) return false;
     return true;
   });
@@ -1078,8 +979,6 @@ function getFiltered(){
   return list;
 }
 
-// Generates "Bag 1", "Bag 2", etc. based on each product's id,
-// per request to avoid named products for now.
 function bagName(p){
   return `Bag ${p.id}`;
 }
@@ -1102,47 +1001,108 @@ function renderProducts(){
   }
 
   grid.innerHTML = list.map(p => {
-    const swatches = p.colors.map(i => `<span class="mini-swatch" style="background:${COLORS[i].hex}"></span>`).join('');
+    const swatches = p.colors.map((colorIdx, idx) => {
+      const isFirst = idx === 0;
+      return `<button class="mini-swatch color-opt ${isFirst ? 'selected' : ''}" data-color="${colorIdx}" style="background:${COLORS[colorIdx].hex}" title="${COLORS[colorIdx].name}"></button>`;
+    }).join('');
+
+    let sizeHtml = '';
+    if(p.sizes.length > 1){
+      sizeHtml = `<select class="size-select" data-id="${p.id}">
+        ${p.sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
+      </select>`;
+    } else {
+      sizeHtml = `<span class="size-label">Size: ${p.sizes[0]}</span>`;
+    }
+
     const badge = p.badge ? `<span class="badge ${p.soldOut?'sold-out':''}">${p.badge}</span>` : '';
     const priceHtml = p.soldOut
       ? `<span class="price-old">Currently unavailable</span>`
       : `<span class="price-now">${p.price.toLocaleString('en-US')} EGP</span>${p.oldPrice ? `<span class="price-old">${p.oldPrice.toLocaleString('en-US')} EGP</span>` : ''}`;
+
     return `
-      <article class="product-card">
+      <article class="product-card" data-id="${p.id}">
         <div class="product-img-wrap">
           ${badge}
           <img src="${p.img}" alt="${bagName(p)}" loading="lazy">
-          ${!p.soldOut ? `<button class="quick-add" data-id="${p.id}">Quick Add to Cart</button>` : ''}
+          ${!p.soldOut ? `<button class="add-to-cart-btn">Add to Cart</button>` : ''}
         </div>
         <div class="product-info">
           <div class="product-cat">${p.cat}</div>
           <h3 class="product-title">${bagName(p)}</h3>
           <div class="product-price">${priceHtml}</div>
-          <div class="swatch-row">${swatches}</div>
+          <div class="selector-row">
+            <div class="swatch-row">${swatches}</div>
+            ${sizeHtml}
+          </div>
         </div>
       </article>`;
   }).join('');
 
-  grid.querySelectorAll('.quick-add').forEach(btn => {
-    btn.addEventListener('click', () => addToCart(parseInt(btn.dataset.id)));
+  grid.querySelectorAll('.color-opt').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.product-card');
+      card.querySelectorAll('.color-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+
+  grid.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.product-card');
+      const id = parseInt(card.dataset.id);
+      const product = PRODUCTS.find(p => p.id === id);
+      if(!product || product.soldOut) return;
+
+      const selectedColorBtn = card.querySelector('.color-opt.selected');
+      const colorIdx = selectedColorBtn ? parseInt(selectedColorBtn.dataset.color) : product.colors[0];
+      const colorName = COLORS[colorIdx].name;
+
+      let size = 'One size';
+      const sizeSelect = card.querySelector('.size-select');
+      if(sizeSelect){
+        size = sizeSelect.value;
+      } else {
+        size = product.sizes[0];
+      }
+
+      addToCart(id, size, colorName);
+    });
   });
 }
 
-/* ============ CART ============ */
-function addToCart(id){
-  const product = PRODUCTS.find(p => p.id === id);
-  const existing = cart.find(c => c.id === id);
-  if(existing) existing.qty++;
-  else cart.push({...product, qty:1, color: COLORS[product.colors[0]].name});
+function addToCart(productId, size, color){
+  const product = PRODUCTS.find(p => p.id === productId);
+  if(!product || product.soldOut) return;
+
+  const existing = cart.find(c => c.id === productId && c.size === size && c.color === color);
+  if(existing){
+    existing.qty++;
+  } else {
+    cart.push({
+      id: product.id,
+      cat: product.cat,
+      price: product.price,
+      img: product.img,
+      colors: product.colors,
+      name: bagName(product),
+      size: size,
+      color: color,
+      qty: 1
+    });
+  }
   renderCart();
   openCart();
 }
 
-function changeQty(id, delta){
-  const item = cart.find(c => c.id === id);
-  if(!item) return;
-  item.qty += delta;
-  if(item.qty <= 0) cart = cart.filter(c => c.id !== id);
+function changeQty(cartIndex, delta){
+  if(cartIndex < 0 || cartIndex >= cart.length) return;
+  cart[cartIndex].qty += delta;
+  if(cart[cartIndex].qty <= 0){
+    cart.splice(cartIndex, 1);
+  }
   renderCart();
 }
 
@@ -1154,39 +1114,31 @@ function renderCart(){
   countEl.textContent = totalQty;
 
   if(cart.length === 0){
-    wrap.innerHTML = `<div class="cart-empty">Your cart is empty.<br>Now's a good time to add a piece you love.</div>`;
+    wrap.innerHTML = `<div class="cart-empty">Your cart is empty.<br></div>`;
     totalEl.textContent = '0 EGP';
     return;
   }
 
-  wrap.innerHTML = cart.map(c => {
-    const colorOptions = c.colors.map(i => `<option value="${COLORS[i].name}" ${COLORS[i].name===c.color?'selected':''}>${COLORS[i].name}</option>`).join('');
+  wrap.innerHTML = cart.map((c, idx) => {
     return `
     <div class="cart-item">
-      <img src="${c.img}" alt="${bagName(c)}">
+      <img src="${c.img}" alt="${c.name}">
       <div class="cart-item-info">
-        <h5>${bagName(c)}</h5>
+        <h5>${c.name}</h5>
         <div>${c.price.toLocaleString('en-US')} EGP</div>
-        ${c.colors.length > 1 ? `<select class="color-select" data-id="${c.id}">${colorOptions}</select>` : `<div class="color-fixed">Color: ${c.color}</div>`}
+        <div class="variant">Size: ${c.size} | Color: ${c.color}</div>
         <div class="qty-row">
-          <button class="qty-btn" data-act="dec" data-id="${c.id}">−</button>
+          <button class="qty-btn" data-act="dec" data-idx="${idx}">−</button>
           <span>${c.qty}</span>
-          <button class="qty-btn" data-act="inc" data-id="${c.id}">+</button>
+          <button class="qty-btn" data-act="inc" data-idx="${idx}">+</button>
         </div>
       </div>
     </div>
   `;}).join('');
 
-  wrap.querySelectorAll('.color-select').forEach(sel => {
-    sel.addEventListener('change', () => {
-      const item = cart.find(c => c.id === parseInt(sel.dataset.id));
-      if(item) item.color = sel.value;
-    });
-  });
-
   wrap.querySelectorAll('.qty-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      changeQty(parseInt(btn.dataset.id), btn.dataset.act === 'inc' ? 1 : -1);
+      changeQty(parseInt(btn.dataset.idx), btn.dataset.act === 'inc' ? 1 : -1);
     });
   });
 
@@ -1209,11 +1161,6 @@ document.getElementById('overlay').addEventListener('click', () => {
   closeMobileFilter();
 });
 
-/* ============ WHATSAPP CHECKOUT ============
-   HOW TO EDIT: change WHATSAPP_NUMBER below to your real business
-   WhatsApp number, in international format with NO plus sign and
-   NO leading zero. Example: an Egyptian number 010 1234 5678
-   becomes "201012345678". */
 const WHATSAPP_NUMBER = '201140567825';
 
 document.getElementById('checkoutBtn').addEventListener('click', () => {
@@ -1235,7 +1182,7 @@ document.getElementById('checkoutBtn').addEventListener('click', () => {
 
   let msg = `Hi, I'd like to confirm the following order from Rubies:\n\n`;
   cart.forEach((c, i) => {
-    msg += `${i+1}) ${bagName(c)}\n   Color: ${c.color}\n   Qty: ${c.qty}\n   Price: ${(c.price*c.qty).toLocaleString('en-US')} EGP\n\n`;
+    msg += `${i+1}) ${c.name}\n   Size: ${c.size} | Color: ${c.color}\n   Qty: ${c.qty}\n   Price: ${(c.price*c.qty).toLocaleString('en-US')} EGP\n\n`;
   });
   msg += `Total: ${total.toLocaleString('en-US')} EGP\n\n`;
   msg += `Name: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n`;
@@ -1245,7 +1192,6 @@ document.getElementById('checkoutBtn').addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
-/* ============ MOBILE FILTER DRAWER ============ */
 function openMobileFilter(){
   document.getElementById('sidebar').classList.add('show');
   document.getElementById('overlay').classList.add('show');
@@ -1258,9 +1204,7 @@ function closeMobileFilter(){
 }
 document.getElementById('mobileFilterOpen').addEventListener('click', openMobileFilter);
 
-/* ============ INIT ============ */
 renderCategories();
-renderColorSwatches();
 renderProducts();
 renderCart();
 </script>
