@@ -991,7 +991,7 @@ function getFiltered(){
 }
 
 function bagName(p){
-  return `Bag ${p.id}`;
+  return p.name || `Bag ${p.id}`;  // لو فيه اسم مخصص استخدمه، غير كده استخدم الترقيم القديم
 }
 
 function renderProducts(){
