@@ -366,108 +366,94 @@
     font-size:0.85rem;
   }
 
-  /* ---------- تفاصيل المنتج (مودال) ---------- */
-  .product-modal-overlay{
-    position:fixed; inset:0;
-    background:rgba(61,43,46,0.6);
-    z-index:300;
-    display:flex;
+  /* ---------- صفحة تفاصيل المنتج ---------- */
+  #productDetailPage{
+    display:none;
+    max-width:1280px;
+    margin:0 auto;
+    padding:30px 28px 80px;
+  }
+  #productDetailPage.show{
+    display:block;
+  }
+  .back-btn{
+    display:inline-flex;
     align-items:center;
-    justify-content:center;
-    opacity:0; pointer-events:none;
-    transition:opacity 0.3s;
+    gap:6px;
+    font-size:0.9rem;
+    margin-bottom:24px;
+    color:var(--ruby-deep);
+    cursor:pointer;
+    transition:opacity 0.2s;
   }
-  .product-modal-overlay.show{
-    opacity:1; pointer-events:auto;
-  }
-  .product-modal{
-    background:var(--cream);
-    border-radius:28px;
-    max-width:900px;
-    width:90%;
-    max-height:90vh;
-    overflow-y:auto;
+  .back-btn:hover{opacity:0.7;}
+  .product-detail-layout{
     display:flex;
     flex-wrap:wrap;
-    box-shadow:0 20px 50px rgba(0,0,0,0.3);
-    position:relative;
+    gap:40px;
   }
-  .modal-close{
-    position:absolute;
-    top:16px; right:16px;
-    width:36px; height:36px;
-    border-radius:50%;
-    background:var(--blush-deep);
-    display:flex; align-items:center; justify-content:center;
-    z-index:5;
-    transition:background .2s;
-    cursor:pointer;
-    border:none;
-  }
-  .modal-close:hover{background:var(--rose-soft);}
-  .modal-img-col{
+  .detail-img-col{
     flex:1 1 400px;
-    padding:24px;
+    background:var(--blush-deep);
+    border-radius:28px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:var(--blush-deep);
-    border-radius:28px 0 0 28px;
+    padding:20px;
   }
-  .modal-img-col img{
+  .detail-img-col img{
     width:100%;
-    max-height:500px;
+    max-height:600px;
     object-fit:cover;
     border-radius:18px;
   }
-  .modal-info-col{
+  .detail-info-col{
     flex:1 1 300px;
-    padding:32px 28px;
     display:flex;
     flex-direction:column;
     gap:18px;
   }
-  .modal-info-col h2{
-    font-size:2rem;
+  .detail-info-col h2{
+    font-size:2.2rem;
     font-style:italic;
     color:var(--ruby-deep);
   }
-  .modal-cat{
+  .detail-cat{
     font-size:0.8rem;
     text-transform:uppercase;
     letter-spacing:0.06em;
     color:var(--rose);
   }
-  .modal-price{
-    font-size:1.3rem;
+  .detail-price{
+    font-size:1.4rem;
     display:flex;
     align-items:center;
     gap:12px;
   }
-  .modal-price .current{color:var(--ruby-deep); font-weight:500;}
-  .modal-price .old{text-decoration:line-through; opacity:0.5; font-size:1rem;}
-  .modal-colors{
+  .detail-price .current{color:var(--ruby-deep); font-weight:500;}
+  .detail-price .old{text-decoration:line-through; opacity:0.5; font-size:1rem;}
+  .detail-colors{
     display:flex;
     gap:12px;
     flex-wrap:wrap;
   }
-  .modal-color-swatch{
-    width:34px; height:34px;
+  .detail-color-swatch{
+    width:36px; height:36px;
     border-radius:50%;
     border:3px solid transparent;
     cursor:pointer;
     transition:transform 0.15s, border-color 0.15s;
     box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
   }
-  .modal-color-swatch.selected{
+  .detail-color-swatch.selected{
     border-color:var(--ruby);
     transform:scale(1.15);
   }
-  .modal-size-label{
+  .detail-size-label{
     font-weight:500;
     margin-bottom:6px;
   }
-  .modal-size-select{
+  .detail-size-select{
     font-family:'Jost',sans-serif;
     padding:10px 14px;
     border:1px solid var(--line);
@@ -476,11 +462,13 @@
     color:var(--ink);
     cursor:pointer;
     font-size:0.95rem;
+    width:100%;
+    max-width:250px;
   }
-  .modal-add-to-cart{
+  .detail-add-to-cart{
     background:var(--ruby);
     color:#fff;
-    padding:14px 0;
+    padding:14px 24px;
     border-radius:30px;
     font-size:1rem;
     letter-spacing:0.02em;
@@ -488,13 +476,13 @@
     margin-top:10px;
     border:none;
     cursor:pointer;
+    max-width:250px;
+    text-align:center;
   }
-  .modal-add-to-cart:hover{background:var(--ruby-deep);}
-  .modal-sold-out{
-    font-size:1.1rem;
-    color:var(--ink);
-    opacity:0.6;
-  }
+  .detail-add-to-cart:hover{background:var(--ruby-deep);}
+
+  /* إخفاء صفحة المتجر عند عرض التفاصيل */
+  #shopPage.hidden{display:none;}
 
   .empty-state{
     grid-column:1/-1;
@@ -766,12 +754,8 @@
     .page-head h1{font-size:2.2rem;}
     .trust-inner{grid-template-columns:repeat(2,1fr);}
     .footer-inner{grid-template-columns:1fr;}
-    .product-modal{
+    .product-detail-layout{
       flex-direction:column;
-      max-height:95vh;
-    }
-    .modal-img-col{
-      border-radius:28px 28px 0 0;
     }
   }
 
@@ -804,7 +788,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
 
-    <a href="#" class="logo">
+    <a href="#" class="logo" id="logoHome">
       <img src="https://ik.imagekit.io/fojb8puzo/Rubies%20Logo%201.png" alt="Rubies" class="logo-img">
     </a>
 
@@ -817,58 +801,85 @@
   </div>
 </header>
 
-<div class="page-head">
-  <div class="breadcrumb">
-    <a href="#">Home</a> &nbsp;/&nbsp; <span id="breadcrumbCat">Shop</span>
+<!-- صفحة المتجر الرئيسية -->
+<div id="shopPage">
+  <div class="page-head">
+    <div class="breadcrumb">
+      <a href="#">Home</a> &nbsp;/&nbsp; <span id="breadcrumbCat">Shop</span>
+    </div>
+    <h1 id="pageTitle">Shop</h1>
+    <p class="sub">Every piece is handmade with care — real craftsmanship, real materials, and a touch that's only Rubies.</p>
+    <div class="head-stitch stitch"></div>
   </div>
-  <h1 id="pageTitle">Shop</h1>
-  <p class="sub">Every piece is handmade with care — real craftsmanship, real materials, and a touch that's only Rubies.</p>
-  <div class="head-stitch stitch"></div>
-</div>
 
-<div class="no-refund-banner">
-  <div class="inner">All sales are final — no refunds. Exchanges may be available, please contact us via WhatsApp before ordering if you have questions.</div>
-</div>
+  <div class="no-refund-banner">
+    <div class="inner">All sales are final — no refunds. Exchanges may be available, please contact us via WhatsApp before ordering if you have questions.</div>
+  </div>
 
-<div class="shop-wrap">
-  <aside class="sidebar" id="sidebar">
-    <div class="filter-block">
-      <h3>Category</h3>
-      <ul class="filter-list" id="categoryList"></ul>
-    </div>
-    <div class="filter-block">
-      <h3>Price</h3>
-      <div class="price-range">
-        <input type="range" id="priceRange" min="50" max="700" value="700" step="10">
-        <div class="vals"><span>50 EGP</span><span id="priceMax">700 EGP</span></div>
+  <div class="shop-wrap">
+    <aside class="sidebar" id="sidebar">
+      <div class="filter-block">
+        <h3>Category</h3>
+        <ul class="filter-list" id="categoryList"></ul>
       </div>
-    </div>
-    <div class="filter-block">
-      <h3>Availability</h3>
-      <ul class="filter-list">
-        <li><button class="filter-toggle active" data-stock="all">All <span class="count" id="cntAll"></span></button></li>
-        <li><button class="filter-toggle" data-stock="in">In stock <span class="count" id="cntIn"></span></button></li>
-      </ul>
-    </div>
-  </aside>
-
-  <main>
-    <div class="toolbar">
-      <div class="result-count" id="resultCount"></div>
-      <div class="sort-select">
-        <select id="sortSelect">
-          <option value="featured">Featured</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="new">Newest</option>
-        </select>
+      <div class="filter-block">
+        <h3>Price</h3>
+        <div class="price-range">
+          <input type="range" id="priceRange" min="50" max="700" value="700" step="10">
+          <div class="vals"><span>50 EGP</span><span id="priceMax">700 EGP</span></div>
+        </div>
       </div>
-    </div>
-    <div class="product-grid" id="productGrid"></div>
-  </main>
+      <div class="filter-block">
+        <h3>Availability</h3>
+        <ul class="filter-list">
+          <li><button class="filter-toggle active" data-stock="all">All <span class="count" id="cntAll"></span></button></li>
+          <li><button class="filter-toggle" data-stock="in">In stock <span class="count" id="cntIn"></span></button></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main>
+      <div class="toolbar">
+        <div class="result-count" id="resultCount"></div>
+        <div class="sort-select">
+          <select id="sortSelect">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="new">Newest</option>
+          </select>
+        </div>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </main>
+  </div>
 </div>
 
-<div class="trust-strip">
+<!-- صفحة تفاصيل المنتج -->
+<div id="productDetailPage">
+  <div class="back-btn" id="backToShopBtn">← Back to Shop</div>
+  <div class="product-detail-layout">
+    <div class="detail-img-col">
+      <img id="detailImg" src="" alt="Product Image">
+    </div>
+    <div class="detail-info-col">
+      <div class="detail-cat" id="detailCat"></div>
+      <h2 id="detailName"></h2>
+      <div class="detail-price" id="detailPrice"></div>
+      <div>
+        <div class="detail-size-label">Select Size</div>
+        <select class="detail-size-select" id="detailSizeSelect"></select>
+      </div>
+      <div>
+        <div class="detail-size-label">Select Color</div>
+        <div class="detail-colors" id="detailColorSwatches"></div>
+      </div>
+      <button class="detail-add-to-cart" id="detailAddToCartBtn">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<div class="trust-strip" id="trustStrip">
   <div class="trust-inner">
     <div class="trust-item">
       <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 20l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
@@ -912,33 +923,6 @@
   <div class="footer-bottom">© Rubies 2026 — All rights reserved. No refunds, all sales final.</div>
 </footer>
 
-<!-- مودال تفاصيل المنتج -->
-<div class="product-modal-overlay" id="productModalOverlay">
-  <div class="product-modal" id="productModal">
-    <button class="modal-close" id="modalClose">✕</button>
-    <div class="modal-img-col">
-      <img id="modalImg" src="" alt="Product Image">
-    </div>
-    <div class="modal-info-col">
-      <div class="modal-cat" id="modalCat"></div>
-      <h2 id="modalName"></h2>
-      <div class="modal-price" id="modalPrice"></div>
-      <div>
-        <div class="modal-size-label">Select Size</div>
-        <select class="modal-size-select" id="modalSizeSelect"></select>
-      </div>
-      <div>
-        <div class="modal-size-label">Select Color</div>
-        <div class="modal-colors" id="modalColorSwatches"></div>
-      </div>
-      <div id="modalAddSection">
-        <button class="modal-add-to-cart" id="modalAddToCartBtn">Add to Cart</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- أوفرلاي العربة -->
 <div class="overlay" id="overlay"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-head">
@@ -1000,7 +984,7 @@ const PRODUCTS = [
     colors:[0,1,2,3,4,5,6,7,8,9], sizes:['One size'],
     img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png',
     colorImages: {
-      0: 'https://ik.imagekit.io/fojb8puzo/2d1a4cbb-cbdc-47bc-ba79-e92dee9b178f.png',
+      0: 'https://via.placeholder.com/500x590/1a1a1a/ffffff?text=Black+Bag',
       1: 'https://via.placeholder.com/500x590/f5f5f5/000000?text=White+Bag',
       2: 'https://via.placeholder.com/500x590/ff69b4/ffffff?text=Hot+Pink+Bag',
       3: 'https://via.placeholder.com/500x590/ff8c42/ffffff?text=Orange+Bag',
@@ -1103,7 +1087,6 @@ let cart = [];
 const announceMsgs = ['ads ads ads', 'ads ads ads', 'ads ads ads', 'ads ads ads'];
 document.getElementById('announceTrack').innerHTML = [...announceMsgs, ...announceMsgs].map(m => `<span>${m}</span>`).join('');
 
-// ---------- دوال الفلاتر والقائمة ----------
 function renderCategories(){
   const list = document.getElementById('categoryList');
   const all = ['All', ...CATEGORIES];
@@ -1161,7 +1144,7 @@ function bagName(p){
   return p.name || `Bag ${p.id}`;
 }
 
-/* ---------- عرض المنتجات في الجريد (بدون أزرار اختيارات) ---------- */
+/* ---------- عرض المنتجات في الجريد (صورة ثابتة) ---------- */
 function renderProducts(){
   const grid = document.getElementById('productGrid');
   const list = getFiltered();
@@ -1194,95 +1177,103 @@ function renderProducts(){
       </article>`;
   }).join('');
 
-  // عند الضغط على أي كارد (غير المباع) يفتح المودال
+  // عند الضغط على أي كارد (غير المباع) يفتح صفحة التفاصيل
   grid.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', () => {
       const id = parseInt(card.dataset.id);
       const product = PRODUCTS.find(p => p.id === id);
-      if(product && !product.soldOut) openProductModal(product);
+      if(product && !product.soldOut) openProductPage(product);
     });
   });
 }
 
-/* ---------- مودال التفاصيل ---------- */
-let currentModalProduct = null;
-let currentModalSelectedColor = 0;
+/* ---------- صفحة التفاصيل الكاملة ---------- */
+let currentDetailProduct = null;
+let currentDetailSelectedColor = 0;
 
-function openProductModal(product){
-  currentModalProduct = product;
-  // اللون المختار الافتراضي أول لون في المصفوفة
-  currentModalSelectedColor = product.colors[0];
+function openProductPage(product){
+  currentDetailProduct = product;
+  currentDetailSelectedColor = product.colors[0];
   
-  document.getElementById('modalCat').textContent = product.cat;
-  document.getElementById('modalName').textContent = bagName(product);
+  // تعبئة البيانات
+  document.getElementById('detailCat').textContent = product.cat;
+  document.getElementById('detailName').textContent = bagName(product);
   
   const priceHtml = product.oldPrice 
     ? `<span class="current">${product.price.toLocaleString('en-US')} EGP</span> <span class="old">${product.oldPrice.toLocaleString('en-US')} EGP</span>`
     : `<span class="current">${product.price.toLocaleString('en-US')} EGP</span>`;
-  document.getElementById('modalPrice').innerHTML = priceHtml;
+  document.getElementById('detailPrice').innerHTML = priceHtml;
   
   // المقاسات
-  const sizeSelect = document.getElementById('modalSizeSelect');
+  const sizeSelect = document.getElementById('detailSizeSelect');
   sizeSelect.innerHTML = product.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
-  if(product.sizes.length === 1) sizeSelect.disabled = true;
-  else sizeSelect.disabled = false;
+  sizeSelect.disabled = product.sizes.length === 1;
   
   // السواتشات
-  const colorContainer = document.getElementById('modalColorSwatches');
+  const colorContainer = document.getElementById('detailColorSwatches');
   colorContainer.innerHTML = product.colors.map(colorIdx => {
-    const selectedClass = colorIdx === currentModalSelectedColor ? 'selected' : '';
-    return `<button class="modal-color-swatch ${selectedClass}" style="background:${COLORS[colorIdx].hex}" data-color="${colorIdx}" title="${COLORS[colorIdx].name}"></button>`;
+    const selectedClass = colorIdx === currentDetailSelectedColor ? 'selected' : '';
+    return `<button class="detail-color-swatch ${selectedClass}" style="background:${COLORS[colorIdx].hex}" data-color="${colorIdx}" title="${COLORS[colorIdx].name}"></button>`;
   }).join('');
   
-  // الصورة الافتراضية
-  updateModalImage();
+  updateDetailImage();
   
-  // إخفاء/إظهار زر الإضافة
-  document.getElementById('modalAddSection').style.display = 'block';
+  // إظهار صفحة التفاصيل وإخفاء المتجر
+  document.getElementById('shopPage').classList.add('hidden');
+  document.getElementById('productDetailPage').classList.add('show');
+  // إخفاء شريط الثقة (اختياري)
+  document.getElementById('trustStrip').style.display = 'none';
+  window.scrollTo(0,0);
   
-  // إظهار المودال
-  document.getElementById('productModalOverlay').classList.add('show');
-  
-  // إضافة مستمعي الأحداث (نستخدم delegation لتجنب التراكم)
-  colorContainer.querySelectorAll('.modal-color-swatch').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  // أحداث الألوان
+  colorContainer.querySelectorAll('.detail-color-swatch').forEach(btn => {
+    btn.addEventListener('click', () => {
       const colorIdx = parseInt(btn.dataset.color);
-      currentModalSelectedColor = colorIdx;
-      // تحديث الكلاسات
-      colorContainer.querySelectorAll('.modal-color-swatch').forEach(b => b.classList.remove('selected'));
+      currentDetailSelectedColor = colorIdx;
+      colorContainer.querySelectorAll('.detail-color-swatch').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      updateModalImage();
+      updateDetailImage();
     });
   });
 }
 
-function updateModalImage(){
-  const img = document.getElementById('modalImg');
-  const product = currentModalProduct;
-  const colorIdx = currentModalSelectedColor;
+function updateDetailImage(){
+  const img = document.getElementById('detailImg');
+  const product = currentDetailProduct;
+  const colorIdx = currentDetailSelectedColor;
   const colorImages = product.colorImages || {};
   img.src = colorImages[colorIdx] || product.img;
 }
 
-// إغلاق المودال
-document.getElementById('modalClose').addEventListener('click', () => {
-  document.getElementById('productModalOverlay').classList.remove('show');
-});
-document.getElementById('productModalOverlay').addEventListener('click', (e) => {
-  if(e.target === e.currentTarget) document.getElementById('productModalOverlay').classList.remove('show');
+// زر الرجوع إلى المتجر
+document.getElementById('backToShopBtn').addEventListener('click', () => {
+  document.getElementById('shopPage').classList.remove('hidden');
+  document.getElementById('productDetailPage').classList.remove('show');
+  document.getElementById('trustStrip').style.display = 'block';
+  currentDetailProduct = null;
 });
 
-// زر الإضافة من داخل المودال
-document.getElementById('modalAddToCartBtn').addEventListener('click', () => {
-  const product = currentModalProduct;
-  const sizeSelect = document.getElementById('modalSizeSelect');
+// زر الشعار للرجوع أيضاً
+document.getElementById('logoHome').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('shopPage').classList.remove('hidden');
+  document.getElementById('productDetailPage').classList.remove('show');
+  document.getElementById('trustStrip').style.display = 'block';
+  currentDetailProduct = null;
+  window.scrollTo(0,0);
+});
+
+// زر الإضافة إلى السلة من صفحة التفاصيل
+document.getElementById('detailAddToCartBtn').addEventListener('click', () => {
+  const product = currentDetailProduct;
+  if(!product) return;
+  const sizeSelect = document.getElementById('detailSizeSelect');
   const size = sizeSelect.value;
-  const colorName = COLORS[currentModalSelectedColor].name;
-  const currentImg = document.getElementById('modalImg').src;
+  const colorName = COLORS[currentDetailSelectedColor].name;
+  const currentImg = document.getElementById('detailImg').src;
   
   addToCart(product.id, size, colorName, currentImg);
-  // ممكن نقفل المودال بعد الإضافة
-  document.getElementById('productModalOverlay').classList.remove('show');
+  // إبقاء المستخدم في صفحة التفاصيل (أو يمكن الرجوع حسب الرغبة)
 });
 
 /* ---------- إضافة للسلة ---------- */
