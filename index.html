@@ -913,22 +913,117 @@ function ph(seed, c1, c2){
     </svg>`);
 }
 
+/* ============ PRODUCTS مع colorImages ============ */
 const PRODUCTS = [
-  { id:1, name:'Circle Bag', cat:'Shoulder bag', price:300, oldPrice:350, colors:[0,1,2,3,4,5,6,7,8,9], sizes:['One size'], img:'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png', badge:'New', date:1 },
-  { id:2, cat:'Shoulder bag', price:280, oldPrice:350, colors:[1,9], sizes:['S "150 cm' , 'M "170 cm'], img:ph(2,'#d5c3a5','#f5f5f5'), badge:'Sale', date:2 },
-  { id:3, cat:'Cross bag', price:890, oldPrice:null, colors:[0,4], sizes:['S','M'], img:ph(3,'#d43d3d','#1a1a1a'), badge:'Best Seller', date:3 },
-  { id:4, cat:'Cross bag', price:1250, oldPrice:null, colors:[1,5], sizes:['One size'], img:ph(4,'#f5f5f5','#4a7ebd'), badge:null, date:4 },
-  { id:5, cat:'Clutch', price:690, oldPrice:null, colors:[8,1], sizes:['One size'], img:ph(5,'#f0a5c0','#f5f5f5'), badge:null, date:5 },
-  { id:6, cat:'Clutch', price:420, oldPrice:480, colors:[9,7], sizes:['One size'], img:ph(6,'#d5c3a5','#f5d547'), badge:'Sale', date:6 },
-  { id:7, cat:'Hats', price:550, oldPrice:null, colors:[6], sizes:['One size'], img:ph(7,'#8b5cf6','#1a1a1a'), badge:'Sold Out', date:7, soldOut:true },
-  { id:8, cat:'Hats', price:300, oldPrice:null, colors:[0,1,4,5], sizes:['Adjustable'], img:ph(8,'#f5f5f5','#4a7ebd'), badge:null, date:8 },
-  { id:9, cat:'Phone strap', price:280, oldPrice:null, colors:[3], sizes:['One size'], img:ph(9,'#ff8c42','#f5d547'), badge:null, date:9 },
-  { id:10, cat:'Phone strap', price:320, oldPrice:360, colors:[8,2], sizes:['One size'], img:ph(10,'#f0a5c0','#ff69b4'), badge:'Sale', date:10 },
+  {
+    id:1, name:'Circle Bag', cat:'Shoulder bag', price:300, oldPrice:350,
+    colors:[0,1,2,3,4,5,6,7,8,9], sizes:['One size'],
+    img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png',
+    colorImages: {
+      0: 'https://ik.imagekit.io/fojb8puzo/2d1a4cbb-cbdc-47bc-ba79-e92dee9b178f.png',
+      1: 'https://via.placeholder.com/500x590/f5f5f5/000000?text=White+Bag',
+      2: 'https://via.placeholder.com/500x590/ff69b4/ffffff?text=Hot+Pink+Bag',
+      3: 'https://via.placeholder.com/500x590/ff8c42/ffffff?text=Orange+Bag',
+      4: 'https://via.placeholder.com/500x590/d43d3d/ffffff?text=Red+Bag',
+      5: 'https://via.placeholder.com/500x590/4a7ebd/ffffff?text=Blue+Bag',
+      6: 'https://via.placeholder.com/500x590/8b5cf6/ffffff?text=Purple+Bag',
+      7: 'https://via.placeholder.com/500x590/f5d547/000000?text=Yellow+Bag',
+      8: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png',
+      9: 'https://via.placeholder.com/500x590/d5c3a5/000000?text=Beige+Bag'
+    },
+    badge:'New', date:1
+  },
+  {
+    id:2, name:'Mini Shoulder Bag', cat:'Shoulder bag', price:280, oldPrice:350,
+    colors:[1,9], sizes:['S 150 cm', 'M 170 cm'],
+    img: ph(2,'#d5c3a5','#f5f5f5'),
+    colorImages: {
+      1: 'https://via.placeholder.com/500x590/f5f5f5/000?text=White',
+      9: 'https://via.placeholder.com/500x590/d5c3a5/000?text=Beige'
+    },
+    badge:'Sale', date:2
+  },
+  {
+    id:3, name:'Crossbody Red', cat:'Cross bag', price:890, oldPrice:null,
+    colors:[0,4], sizes:['S','M'],
+    img: ph(3,'#d43d3d','#1a1a1a'),
+    colorImages: {
+      0: 'https://via.placeholder.com/500x590/1a1a1a/fff?text=Black',
+      4: 'https://via.placeholder.com/500x590/d43d3d/fff?text=Red'
+    },
+    badge:'Best Seller', date:3
+  },
+  {
+    id:4, name:'Denim Blue Cross', cat:'Cross bag', price:1250, oldPrice:null,
+    colors:[1,5], sizes:['One size'],
+    img: ph(4,'#f5f5f5','#4a7ebd'),
+    colorImages: {
+      1: 'https://via.placeholder.com/500x590/f5f5f5/000?text=White',
+      5: 'https://via.placeholder.com/500x590/4a7ebd/fff?text=Blue'
+    },
+    badge:null, date:4
+  },
+  {
+    id:5, name:'Pink Clutch', cat:'Clutch', price:690, oldPrice:null,
+    colors:[8,1], sizes:['One size'],
+    img: ph(5,'#f0a5c0','#f5f5f5'),
+    colorImages: {
+      8: 'https://via.placeholder.com/500x590/f0a5c0/fff?text=Pink',
+      1: 'https://via.placeholder.com/500x590/f5f5f5/000?text=White'
+    },
+    badge:null, date:5
+  },
+  {
+    id:6, name:'Beige Clutch', cat:'Clutch', price:420, oldPrice:480,
+    colors:[9,7], sizes:['One size'],
+    img: ph(6,'#d5c3a5','#f5d547'),
+    colorImages: {
+      9: 'https://via.placeholder.com/500x590/d5c3a5/000?text=Beige',
+      7: 'https://via.placeholder.com/500x590/f5d547/000?text=Yellow'
+    },
+    badge:'Sale', date:6
+  },
+  {
+    id:7, name:'Purple Hat', cat:'Hats', price:550, oldPrice:null,
+    colors:[6], sizes:['One size'],
+    img: ph(7,'#8b5cf6','#1a1a1a'),
+    colorImages: { 6: 'https://via.placeholder.com/500x590/8b5cf6/fff?text=Purple+Hat' },
+    badge:'Sold Out', date:7, soldOut:true
+  },
+  {
+    id:8, name:'Summer Hat', cat:'Hats', price:300, oldPrice:null,
+    colors:[0,1,4,5], sizes:['Adjustable'],
+    img: ph(8,'#f5f5f5','#4a7ebd'),
+    colorImages: {
+      0: 'https://via.placeholder.com/500x590/1a1a1a/fff?text=Black',
+      1: 'https://via.placeholder.com/500x590/f5f5f5/000?text=White',
+      4: 'https://via.placeholder.com/500x590/d43d3d/fff?text=Red',
+      5: 'https://via.placeholder.com/500x590/4a7ebd/fff?text=Blue'
+    },
+    badge:null, date:8
+  },
+  {
+    id:9, name:'Orange Strap', cat:'Phone strap', price:280, oldPrice:null,
+    colors:[3], sizes:['One size'],
+    img: ph(9,'#ff8c42','#f5d547'),
+    colorImages: { 3: 'https://via.placeholder.com/500x590/ff8c42/fff?text=Orange+Strap' },
+    badge:null, date:9
+  },
+  {
+    id:10, name:'Pink Strap', cat:'Phone strap', price:320, oldPrice:360,
+    colors:[8,2], sizes:['One size'],
+    img: ph(10,'#f0a5c0','#ff69b4'),
+    colorImages: {
+      8: 'https://via.placeholder.com/500x590/f0a5c0/fff?text=Pink',
+      2: 'https://via.placeholder.com/500x590/ff69b4/fff?text=Hot+Pink'
+    },
+    badge:'Sale', date:10
+  },
 ];
 
 let state = {
   category: '',
-  maxPrice: 700,  /* بدأنا من 700 */
+  maxPrice: 700,
   stock: 'all',
   sort: 'featured',
 };
@@ -991,9 +1086,10 @@ function getFiltered(){
 }
 
 function bagName(p){
-  return p.name || `Bag ${p.id}`;  // لو فيه اسم مخصص استخدمه، غير كده استخدم الترقيم القديم
+  return p.name || `Bag ${p.id}`;
 }
 
+/* ============ RENDER PRODUCTS (مع تغيير الصور) ============ */
 function renderProducts(){
   const grid = document.getElementById('productGrid');
   const list = getFiltered();
@@ -1002,16 +1098,15 @@ function renderProducts(){
   document.getElementById('cntIn').textContent = PRODUCTS.filter(p=>!p.soldOut).length;
 
   if(list.length === 0){
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="ico">✦</div>
-        <h3>No matching products</h3>
-        <p>Try adjusting the filters or price range to see more items</p>
-      </div>`;
+    grid.innerHTML = `<div class="empty-state"><div class="ico">✦</div><h3>No matching products</h3><p>Try adjusting the filters or price range to see more items</p></div>`;
     return;
   }
 
   grid.innerHTML = list.map(p => {
+    // الصورة الأولية: إما صورة اللون الأول إن وجدت، أو الصورة الافتراضية
+    const firstColorIndex = p.colors[0];
+    const initialImg = (p.colorImages && p.colorImages[firstColorIndex]) || p.img;
+
     const swatches = p.colors.map((colorIdx, idx) => {
       const isFirst = idx === 0;
       return `<button class="mini-swatch color-opt ${isFirst ? 'selected' : ''}" data-color="${colorIdx}" style="background:${COLORS[colorIdx].hex}" title="${COLORS[colorIdx].name}"></button>`;
@@ -1035,7 +1130,7 @@ function renderProducts(){
       <article class="product-card" data-id="${p.id}">
         <div class="product-img-wrap">
           ${badge}
-          <img src="${p.img}" alt="${bagName(p)}" loading="lazy">
+          <img src="${initialImg}" alt="${bagName(p)}" loading="lazy" class="main-product-img">
           ${!p.soldOut ? `<button class="add-to-cart-btn">Add to Cart</button>` : ''}
         </div>
         <div class="product-info">
@@ -1047,18 +1142,29 @@ function renderProducts(){
             ${sizeHtml}
           </div>
         </div>
+        <div class="product-data" style="display:none;" data-color-images='${JSON.stringify(p.colorImages || {})}' data-default-img="${p.img}"></div>
       </article>`;
   }).join('');
 
+  // تغيير الصورة عند النقر على اللون
   grid.querySelectorAll('.color-opt').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const card = btn.closest('.product-card');
       card.querySelectorAll('.color-opt').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+
+      const colorIdx = parseInt(btn.dataset.color);
+      const imgElement = card.querySelector('.main-product-img');
+      const dataDiv = card.querySelector('.product-data');
+      const colorImages = JSON.parse(dataDiv.dataset.colorImages || '{}');
+      const defaultImg = dataDiv.dataset.defaultImg;
+
+      imgElement.src = colorImages[colorIdx] || defaultImg;
     });
   });
 
+  // زر الإضافة للسلة (مع الصورة الحالية)
   grid.querySelectorAll('.add-to-cart-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -1079,12 +1185,14 @@ function renderProducts(){
         size = product.sizes[0];
       }
 
-      addToCart(id, size, colorName);
+      const currentImgSrc = card.querySelector('.main-product-img').src;
+      addToCart(id, size, colorName, currentImgSrc);
     });
   });
 }
 
-function addToCart(productId, size, color){
+/* ============ ADD TO CART (مع الصورة) ============ */
+function addToCart(productId, size, color, imageSrc){
   const product = PRODUCTS.find(p => p.id === productId);
   if(!product || product.soldOut) return;
 
@@ -1096,8 +1204,7 @@ function addToCart(productId, size, color){
       id: product.id,
       cat: product.cat,
       price: product.price,
-      img: product.img,
-      colors: product.colors,
+      img: imageSrc,
       name: bagName(product),
       size: size,
       color: color,
