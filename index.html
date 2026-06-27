@@ -105,16 +105,18 @@
     justify-content:space-between;
     gap:24px;
   }
+
   .logo{
-    font-size:1.9rem;
-    font-weight:600;
-    letter-spacing:0.02em;
-    color:var(--ruby-deep);
     display:flex;
-    align-items:baseline;
-    gap:6px;
+    align-items:center;
+    height:45px;
+    flex-shrink:0;
   }
-  .logo .dot{color:var(--gold); font-size:1rem;}
+  .logo-img{
+    height:100%;
+    width:auto;
+    display:block;
+  }
 
   .header-icons{
     display:flex;
@@ -410,6 +412,7 @@
     display:flex;
     gap:6px;
     align-items:center;
+    flex-wrap:wrap;
   }
   .mini-swatch{
     width:18px;height:18px;
@@ -716,7 +719,7 @@
   @media (max-width:560px){
     .product-grid{gap:22px 14px;}
     .header-inner{padding:14px 18px;}
-    .logo{font-size:1.5rem;}
+    .logo{height:36px;}
     .page-head{padding:36px 18px 18px;}
   }
 
@@ -742,7 +745,9 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
 
-    <a href="#" class="logo">Rubies<span class="dot">•</span></a>
+    <a href="#" class="logo">
+      <img src="https://ik.imagekit.io/fojb8puzo/Rubies%20Logo%201.png" alt="Rubies" class="logo-img">
+    </a>
 
     <div class="header-icons">
       <button class="icon-btn" id="cartBtn" aria-label="Cart">
@@ -777,8 +782,8 @@
     <div class="filter-block">
       <h3>Price</h3>
       <div class="price-range">
-        <input type="range" id="priceRange" min="400" max="2200" value="2200" step="50">
-        <div class="vals"><span>400 EGP</span><span id="priceMax">2200 EGP</span></div>
+        <input type="range" id="priceRange" min="50" max="700" value="700" step="10">
+        <div class="vals"><span>50 EGP</span><span id="priceMax">700 EGP</span></div>
       </div>
     </div>
 
@@ -844,7 +849,7 @@
     <div>
       <h4>Contact</h4>
       <ul>
-        <li>WhatsApp: 010xxxxxxxx</li>
+        <li>WhatsApp: +20 120 182 8084</li>
         <li>Alexandria, Egypt</li>
       </ul>
     </div>
@@ -878,15 +883,19 @@
 </div>
 
 <script>
-/* ============ CATEGORIES (تم التعديل) ============ */
 const CATEGORIES = ['Shoulder bag', 'Cross bag', 'Clutch', 'Hats', 'Phone strap'];
 
 const COLORS = [
-  {name:'Light Pink', hex:'#EFC0C6'},
-  {name:'Beige', hex:'#E3CBB4'},
-  {name:'Dusty Rose', hex:'#C98A93'},
-  {name:'Cream', hex:'#FFFDFB'},
-  {name:'Light Brown', hex:'#A9806B'},
+  {name:'Black', hex:'#1a1a1a'},
+  {name:'White', hex:'#f5f5f5'},
+  {name:'Hot Pink', hex:'#ff69b4'},
+  {name:'Orange', hex:'#ff8c42'},
+  {name:'Red', hex:'#d43d3d'},
+  {name:'Blue', hex:'#4a7ebd'},
+  {name:'Purple', hex:'#8b5cf6'},
+  {name:'Yellow', hex:'#f5d547'},
+  {name:'Pink', hex:'#f0a5c0'},
+  {name:'Beige', hex:'#d5c3a5'},
 ];
 
 function ph(seed, c1, c2){
@@ -904,23 +913,22 @@ function ph(seed, c1, c2){
     </svg>`);
 }
 
-/* ============ PRODUCTS (تم تعديلها لتناسب الأقسام الجديدة) ============ */
 const PRODUCTS = [
-  { id:1, cat:'Shoulder bag', price:950, oldPrice:null, colors:[0,1,2], sizes:['S','M','L'], img:ph(1,'#F8E3E6','#EFC0C6'), badge:'New', date:1 },
-  { id:2, cat:'Shoulder bag', price:780, oldPrice:850, colors:[1,3], sizes:['One size'], img:ph(2,'#F0E5D8','#E3CBB4'), badge:'Sale', date:2 },
-  { id:3, cat:'Cross bag', price:890, oldPrice:null, colors:[2,0], sizes:['S','M'], img:ph(3,'#E9C6CB','#C98A93'), badge:'Best Seller', date:3 },
-  { id:4, cat:'Cross bag', price:1250, oldPrice:null, colors:[3,4], sizes:['One size'], img:ph(4,'#FFF8F4','#E3CBB4'), badge:null, date:4 },
-  { id:5, cat:'Clutch', price:690, oldPrice:null, colors:[0,3], sizes:['One size'], img:ph(5,'#F8E3E6','#FFFDFB'), badge:null, date:5 },
-  { id:6, cat:'Clutch', price:420, oldPrice:480, colors:[1,4], sizes:['One size'], img:ph(6,'#EADFCB','#A9806B'), badge:'Sale', date:6 },
-  { id:7, cat:'Hats', price:550, oldPrice:null, colors:[2], sizes:['One size'], img:ph(7,'#E9C6CB','#A9806B'), badge:'Sold Out', date:7, soldOut:true },
-  { id:8, cat:'Hats', price:300, oldPrice:null, colors:[0,1,2,3], sizes:['Adjustable'], img:ph(8,'#F0E5D8','#EFC0C6'), badge:null, date:8 },
-  { id:9, cat:'Phone strap', price:280, oldPrice:null, colors:[4], sizes:['One size'], img:ph(9,'#E3CBB4','#A9806B'), badge:null, date:9 },
-  { id:10, cat:'Phone strap', price:320, oldPrice:360, colors:[1,3], sizes:['One size'], img:ph(10,'#F8E3E6','#E3CBB4'), badge:'Sale', date:10 },
+  { id:1, name:'Circle Bag', cat:'Shoulder bag', price:300, oldPrice:350, colors:[0,1,2,3,4,5,6,7,8,9], sizes:['One size'], img:'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png', badge:'New', date:1 },
+  { id:2, cat:'Shoulder bag', price:780, oldPrice:850, colors:[1,9], sizes:['One size'], img:ph(2,'#d5c3a5','#f5f5f5'), badge:'Sale', date:2 },
+  { id:3, cat:'Cross bag', price:890, oldPrice:null, colors:[0,4], sizes:['S','M'], img:ph(3,'#d43d3d','#1a1a1a'), badge:'Best Seller', date:3 },
+  { id:4, cat:'Cross bag', price:1250, oldPrice:null, colors:[1,5], sizes:['One size'], img:ph(4,'#f5f5f5','#4a7ebd'), badge:null, date:4 },
+  { id:5, cat:'Clutch', price:690, oldPrice:null, colors:[8,1], sizes:['One size'], img:ph(5,'#f0a5c0','#f5f5f5'), badge:null, date:5 },
+  { id:6, cat:'Clutch', price:420, oldPrice:480, colors:[9,7], sizes:['One size'], img:ph(6,'#d5c3a5','#f5d547'), badge:'Sale', date:6 },
+  { id:7, cat:'Hats', price:550, oldPrice:null, colors:[6], sizes:['One size'], img:ph(7,'#8b5cf6','#1a1a1a'), badge:'Sold Out', date:7, soldOut:true },
+  { id:8, cat:'Hats', price:300, oldPrice:null, colors:[0,1,4,5], sizes:['Adjustable'], img:ph(8,'#f5f5f5','#4a7ebd'), badge:null, date:8 },
+  { id:9, cat:'Phone strap', price:280, oldPrice:null, colors:[3], sizes:['One size'], img:ph(9,'#ff8c42','#f5d547'), badge:null, date:9 },
+  { id:10, cat:'Phone strap', price:320, oldPrice:360, colors:[8,2], sizes:['One size'], img:ph(10,'#f0a5c0','#ff69b4'), badge:'Sale', date:10 },
 ];
 
 let state = {
   category: '',
-  maxPrice: 2200,
+  maxPrice: 700,  /* بدأنا من 700 */
   stock: 'all',
   sort: 'featured',
 };
