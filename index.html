@@ -2240,7 +2240,7 @@
 
         // All products now include all 15 colors
         const PRODUCTS = [
-          { id:1, name:'Circle Bag', cat:'Shoulder bag', price:300, oldPrice:350,
+          { id:1, name:'Circle Bag', cat:'Shoulder bag', price:330, oldPrice:null,
             colors:[0,1,2,3,4,5,6,7,8,9], sizes:['One size'],
             img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png',
             colorImages: {
@@ -2257,7 +2257,7 @@
             },
             badge:'New', date:1
           },
-          { id:2, name:'Mini Shoulder Bag', cat:'Shoulder bag', price:230, oldPrice:250,
+          { id:2, name:'Mini Shoulder Bag', cat:'Shoulder bag', price:270, oldPrice:null,
             colors:[0,1,2,3,4,5,7,8], sizes:['18x15 cm'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.51.41%20PM.jpeg',
             colorImages: {
@@ -2272,7 +2272,7 @@
             },
             badge:'Sale', date:2
           },
-          { id:3, name:'Mixed Bag', cat:'Shoulder bag', price:270, oldPrice:300,
+          { id:3, name:'Mixed Bag', cat:'Shoulder bag', price:300, oldPrice:null,
             colors:[10,11,12,13,14], sizes:['23x17 cm'],
              img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.52.26%20PM.jpeg',
             colorImages: {
@@ -2286,8 +2286,8 @@
           },
           { id:4, name:'Tote Bag', cat:'Shoulder bag',
             priceOptions: [
-              { name: '30x25 cm', price: 400 },
-              { name: '35x25 cm', price: 450 }
+              { name: '30x25 cm', price: 450 },
+              { name: '35x25 cm', price: 500 }
             ],
             colors:[10,11,12,13,14], sizes:['One size'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.38.45%20AM.jpeg',
@@ -2301,7 +2301,7 @@
             badge:null, date:4
           },
           { id:5, name:'Summer Clutch', cat:'Clutch',
-            sizePrices: { '15 cm': 300, '20 cm': 400, '25 cm': 500 },
+            sizePrices: { '15 cm': 350, '20 cm': 450, '25 cm': 550 },
             colors:[0,1,2,3,4,5,6,7,8], sizes:['15 cm','20 cm','25 cm'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.00.48%20AM.jpeg',
             extraImages: [
@@ -2311,7 +2311,7 @@
             ],
             badge:'Best Seller', date:5
           },
-          { id:6, name:'Mixed Clutch', cat:'Clutch', price:200, oldPrice:null, 
+          { id:6, name:'Mixed Clutch', cat:'Clutch', price:240, oldPrice:null, 
             colors:[10,11,12,13,14], sizes:['16x12 cm'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.21.09%20AM.jpeg',
             colorImages: {
@@ -2323,10 +2323,10 @@
             },
             badge:null, date:6
           },
-          { id:7, name:'Mesh Hat', cat:'Hats', price:100, oldPrice:null,
+          { id:7, name:'Mesh Hat', cat:'Hats', price:120, oldPrice:null,
           priceOptions: [
-              { name: 'Without', price: 100 },
-              { name: 'With Charms', price: 110 }
+              { name: 'Without', price: 120 },
+              { name: 'With Charms', price: 130 }
             ],
             colors:[0,1,5,6,7,8,9], sizes:['One size'],
             img: 'https://ik.imagekit.io/fojb8puzo/DSC0510.jpg',
@@ -2341,14 +2341,14 @@
           },
           { id:8, name:'Rolled Phone Strap', cat:'Phone strap', 
             priceOptions: [
-              { name: 'Hand', price: 70 },
-              { name: 'Cross', price: 110 }
+              { name: 'Hand', price: 80 },
+              { name: 'Cross', price: 120 }
             ],
             colors:[1,2,3,4,5,7,8], sizes:['One size'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.11.43%20AM%20(1).jpeg',
             badge:null, date:8
           },
-          { id:9, name:'Cross Phone Strap', cat:'Phone strap', price:100, oldPrice:null,
+          { id:9, name:'Cross Phone Strap', cat:'Phone strap', price:120, oldPrice:null,
             colors:[1,2,3,4,5,7,8], sizes:['100 cm','120 cm','140 cm'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg',
             extraImages: [
@@ -2358,15 +2358,15 @@
             ],
             badge:'Best Seller', date:9
           },
-          { id:10, name:'Hand Phone Strap', cat:'Phone strap', price:60, oldPrice:80,
+          { id:10, name:'Hand Phone Strap', cat:'Phone strap', price:70, oldPrice:90,
             colors:[1,2,3,4,5,7,8], sizes:['One size'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.45.54%20AM%20(1).jpeg',
             badge:'Sale', date:10
           },
           { id:11, name:'Sequin Clutch', cat:'Clutch',
             priceOptions: [
-              { name: '18x12 cm', price: 200 },
-              { name: '23x12 cm', price: 230 }
+              { name: '18x12 cm', price: 240 },
+              { name: '23x12 cm', price: 270 }
             ],
             colors:[0,6], sizes:['One size'],
             img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%2012.54.14%20AM.jpeg',
