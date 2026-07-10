@@ -15,6 +15,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- ============ SUPABASE CLIENT (CDN) ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+
     <style>
         /* ============ DESIGN TOKENS ============ */
         :root {
@@ -2449,122 +2454,48 @@
     </div>
 
     <script>
+        // ============ SUPABASE CONFIG ============
+        // ADMIN: Supabase client for the main store
+        const SUPABASE_URL = 'https://dwjpahfiidhkmpwfocwb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_0DJ0ZwWLg4hRR1a9ypqsag_lSE_0SU6';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // ============ DISCOUNT CODES — easily editable ============
         const discountCodes = [
-            { code: 'RUBIES10', discount: 0.10 }, // 20% off
+            { code: 'RUBIES10', discount: 0.10 },
             { code: 'FREESHIP', discount: 0.0, note: 'Free shipping' }
         ];
 
-        // ============ DATA ============
+        // ============ COLORS PALETTE (shared with admin) ============
+        const COLORS = [
+            { name: 'Black', hex: '#1a1a1a' },
+            { name: 'White', hex: '#f5f5f5' },
+            { name: 'Hot Pink', hex: '#ff69b4' },
+            { name: 'Orange', hex: '#ff8c42' },
+            { name: 'Red', hex: '#d43d3d' },
+            { name: 'Blue', hex: '#4a7ebd' },
+            { name: 'Purple', hex: '#8b5cf6' },
+            { name: 'Yellow', hex: '#f5d547' },
+            { name: 'Pink', hex: '#f0a5c0' },
+            { name: 'Beige', hex: '#d5c3a5' },
+            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] },
+            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] },
+            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] },
+            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] },
+            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }
+        ];
+
+        // ============ CATEGORIES ============
         const CATEGORIES = ['Shoulder bag', 'Clutch', 'Hats', 'Phone strap'];
-        const BEST_SELLER_IDS = [9, 3, 5, 7];
         const CATEGORY_IMAGES = {
             'Shoulder bag': 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png',
             'Clutch': 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.00.48%20AM.jpeg',
             'Hats': 'https://ik.imagekit.io/fojb8puzo/DSC0510.jpg',
             'Phone strap': 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg'
         };
-        const COLORS = [
-            { name: 'Black', hex: '#1a1a1a' },                                                                //0 
-            { name: 'White', hex: '#f5f5f5' },                                                                //1 
-            { name: 'Hot Pink', hex: '#ff69b4' },                                                             //2
-            { name: 'Orange', hex: '#ff8c42' },                                                               //3
-            { name: 'Red', hex: '#d43d3d' },                                                                  //4
-            { name: 'Blue', hex: '#4a7ebd' },                                                                 //5
-            { name: 'Purple', hex: '#8b5cf6' },                                                               //6
-            { name: 'Yellow', hex: '#f5d547' },                                                               //7
-            { name: 'Pink', hex: '#f0a5c0' },                                                                 //8              
-            { name: 'Beige', hex: '#d5c3a5' },                                                                //9
-            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] },                     //10
-            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] },                              //11
-            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] },                         //12
-            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] },                  //13
-            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }                           //14
-        ];
-        const PRODUCTS = [
-            { id: 1, name: 'Circle Bag', cat: 'Shoulder bag', price: 330, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-                sizes: ['One size'],
-                img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png',
-                colorImages: {
-                     0: 'https://ik.imagekit.io/fojb8puzo/2d1a4cbb-cbdc-47bc-ba79-e92dee9b178f.png?updatedAt=1782616178294',
-                     1: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2003_04_38%20AM.png?updatedAt=1782616178533',
-                     2: 'https://ik.imagekit.io/fojb8puzo/c8de80f0-559a-4b3c-9f0a-446c63d8adb1.png?updatedAt=1782616180245',
-                     3: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2003_08_32%20AM.png?updatedAt=1782616180489',
-                     4: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2003_09_32%20AM.png?updatedAt=1782616179505',
-                     5: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2003_12_16%20AM.png?updatedAt=1782616180543',
-                     6: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2003_19_53%20AM.png?updatedAt=1782616180477',
-                     7: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2003_29_40%20AM.png?updatedAt=1782616180152',
-                     8: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2027,%202026,%2010_54_42%20PM.png?updatedAt=1782616180712', 
-                     9: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2003_32_21%20AM.png?updatedAt=1782616180203' },
-                badge: 'New', date: 1 },
-            { id: 2, name: 'Mini Shoulder Bag', cat: 'Shoulder bag', price: 200, colors: [0, 1, 2, 3, 4, 5, 7, 8],
-                sizes: ['18x15 cm'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.51.41%20PM.jpeg',
-                colorImages: { 
-                    0: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2006_54_38%20PM.png', 
-                    1: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_01_19%20PM.png', 
-                    2: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2006_49_29%20PM.png', 
-                    3: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2006_51_16%20PM.png',
-                    4: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2006_59_55%20PM.png', 
-                    5: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_03_48%20PM.png', 
-                    7: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.51.41%20PM.jpeg', 
-                    8: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2006_47_21%20PM.png' },
-                badge: 'Sale', date: 2 },
-            { id: 3, name: 'Mixed Bag', cat: 'Shoulder bag', price: 230, colors: [10, 11, 12, 13, 14], sizes: ['23x17 cm'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.52.26%20PM.jpeg',
-                colorImages: { 10: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_12_00%20PM.png', 11: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_14_11%20PM.png', 12: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.52.26%20PM.jpeg', 13: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_17_45%20PM.png', 14: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_18_57%20PM.png' },
-                badge: 'Best Seller', date: 3 },
-            { id: 4, name: 'Tote Bag', cat: 'Shoulder bag', priceOptions: [{ name: '30x25 cm', price: 350 }, { name: '35x25 cm',
-                    price: 400 }], colors: [10, 11, 12, 13, 14], sizes: ['One size'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.38.45%20AM.jpeg',
-                colorImages: { 10: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_40_51%20PM.png', 11: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_44_13%20PM.png', 12: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_49_59%20PM.png', 13: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_54_35%20PM.png', 14: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2007_52_13%20PM.png' },
-                badge: null, date: 4 },
-            { id: 5, name: 'Summer Clutch', cat: 'Clutch', sizePrices: { '15 cm': 330, '20 cm': 380, '25 cm': 440 },
-                colors: [0, 1, 2, 3, 4, 5, 6, 7, 8], sizes: ['15 cm', '20 cm', '25 cm'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.00.48%20AM.jpeg',
-                extraImages: ['https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%202.12.15%20AM.jpeg',
-                    'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%202.12.44%20AM.jpeg',
-                    'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.00.48%20AM%20(1).jpeg'
-                ], badge: 'Best Seller', date: 5 },
-            { id: 6, name: 'Mixed Clutch', cat: 'Clutch', price: 180, colors: [10, 11, 12, 13, 14], sizes: ['16x12 cm'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.21.09%20AM.jpeg',
-                colorImages: { 10: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%201.21.09%20AM.jpeg', 11: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2008_27_42%20PM.png', 12: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2008_26_34%20PM.png', 13: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2008_23_39%20PM.png', 14: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2008_25_15%20PM.png' },
-                badge: null, date: 6 },
-            { id: 7, name: 'Mesh Hat', cat: 'Hats', price: 120, priceOptions: [{ name: 'Without', price: 120 }, { name: 'With Charms',
-                    price: 130 }], colors: [0, 1, 5, 6, 7, 8, 9], sizes: ['One size'],
-                img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_41_22%20AM.png',
-                colorImages: { 
-                    0: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_33_35%20AM.png', 
-                    1: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2001_02_34%20AM.png',  
-                    5: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_36_04%20AM.png',
-                    6: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_37_13%20AM.png', 
-                    7: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_38_27%20AM.png', 
-                    8: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_40_09%20AM.png', 
-                    9: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_41_22%20AM.png' },
-                badge: 'Best Seller', date: 7 },
-            { id: 8, name: 'Rolled Phone Strap', cat: 'Phone strap', priceOptions: [{ name: 'Hand', price: 80 },
-                { name: 'Cross', price: 130 }
-            ], colors: [1, 2, 3, 4, 5, 7, 8], sizes: ['One size'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.11.43%20AM%20(1).jpeg',
-                badge: null, date: 8 },
-            { id: 9, name: 'Cross Phone Strap', cat: 'Phone strap', price: 110, colors: [1, 2, 3, 4, 5, 7, 8],
-                sizes: ['100 cm', '120 cm', '140 cm'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg',
-                extraImages: ['https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg',
-                    'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM%20(1).jpeg'
-                ], badge: 'Best Seller', date: 9 },
-            { id: 10, name: 'Hand Phone Strap', cat: 'Phone strap', price: 70, oldPrice: 90, colors: [1, 2, 3, 4, 5, 7, 8],
-                sizes: ['One size'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%204.45.54%20AM%20(1).jpeg',
-                badge: 'Sale', date: 10 },
-            { id: 11, name: 'Sequin Clutch', cat: 'Clutch', priceOptions: [{ name: '18x12 cm', price: 240 }, { name: '23x12 cm',
-                    price: 270 }], colors: [0, 6], sizes: ['One size'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%2012.54.14%20AM.jpeg',
-                colorImages: { 0: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2008_33_21%20PM.png', 6: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%2012.54.14%20AM.jpeg' },
-                badge: 'New', date: 11 }
-        ];
 
         // ============ STATE ============
+        let PRODUCTS = []; // ADMIN: now populated from Supabase
         let state = { category: '', stock: 'all', view: 'home' };
         let cart = [],
             wishlist = [];
@@ -2575,51 +2506,34 @@
             currentSlide = 0,
             detailPrice = 0;
         let recentlyViewed = [];
-        let appliedDiscount = null; // { code, discount, note? }
-
-        // ============ STORAGE ============
-        function saveCart() { localStorage.setItem('rubies_cart', JSON.stringify(cart)); }
-
-        function loadCart() {
-            try { const s = localStorage.getItem('rubies_cart'); if (s) { cart = JSON.parse(s) || []; cart.forEach(c => { if (!c
-                        .img) { const p = PRODUCTS.find(x => x.id === c.id); if (p) c.img = p.img; } }); } } catch (e) { cart =
-                    []; }
-        }
-
-        function saveWishlist() { localStorage.setItem('rubies_wishlist', JSON.stringify(wishlist)); }
-
-        function loadWishlist() {
-            try { const s = localStorage.getItem('rubies_wishlist'); if (s) wishlist = JSON.parse(s) || []; } catch (e) { wishlist =
-                    []; }
-        }
-
-        function saveRecentlyViewed() {
-            localStorage.setItem('rubies_recently', JSON.stringify(recentlyViewed.slice(0, 10)));
-        }
-
-        function loadRecentlyViewed() {
-            try {
-                const s = localStorage.getItem('rubies_recently');
-                if (s) { recentlyViewed = JSON.parse(s) || []; } else { recentlyViewed = []; }
-            } catch (e) { recentlyViewed = []; }
-        }
+        let appliedDiscount = null;
+        let productsLoaded = false;
 
         // ============ PRICE HELPERS ============
-        function getMinPrice(p) { if (p.sizePrices) return Math.min(...Object.values(p.sizePrices)); if (p.priceOptions) return Math
-                .min(...p.priceOptions.map(o => o.price)); return p.price || 0; }
+        function getMinPrice(p) {
+            if (p.size_prices) return Math.min(...Object.values(p.size_prices));
+            if (p.price_options) return Math.min(...p.price_options.map(o => o.price));
+            return p.price || 0;
+        }
 
-        function getMaxPrice(p) { if (p.sizePrices) return Math.max(...Object.values(p.sizePrices)); if (p.priceOptions) return Math
-                .max(...p.priceOptions.map(o => o.price)); return p.price || 0; }
+        function getMaxPrice(p) {
+            if (p.size_prices) return Math.max(...Object.values(p.size_prices));
+            if (p.price_options) return Math.max(...p.price_options.map(o => o.price));
+            return p.price || 0;
+        }
 
         function priceDisplay(p) {
-            if (p.soldOut) return 'Unavailable';
+            if (p.sold_out) return 'Unavailable';
             const mn = getMinPrice(p),
                 mx = getMaxPrice(p);
             return mn === mx ? `${mn.toLocaleString()} EGP` : `${mn.toLocaleString()} – ${mx.toLocaleString()} EGP`;
         }
 
-        function initPrice(p) { if (p.sizePrices) return p.sizePrices[p.sizes[0]]; if (p.priceOptions) return p.priceOptions[0]
-                .price; return p.price || 0; }
+        function initPrice(p) {
+            if (p.size_prices) return p.size_prices[p.sizes[0]];
+            if (p.price_options) return p.price_options[0].price;
+            return p.price || 0;
+        }
 
         // ============ SKELETON ============
         function addSkeleton(img) {
@@ -2660,7 +2574,7 @@
                 section.style.display = 'none';
                 return;
             }
-            const valid = recentlyViewed.filter(r => PRODUCTS.some(p => p.id === r.id && !p.soldOut));
+            const valid = recentlyViewed.filter(r => PRODUCTS.some(p => p.id === r.id && !p.sold_out));
             if (!valid.length) { section.style.display = 'none'; return; }
             section.style.display = 'block';
             row.innerHTML = valid.map(r => {
@@ -2671,7 +2585,6 @@
             row.querySelectorAll('.product-card-small').forEach(c => cardSmallEvents(c));
             row.querySelectorAll('.wishlist-heart').forEach(heartEvents);
             skelContainer(row);
-            // arrows
             const l = document.getElementById('recentlyLeft'),
                 ri = document.getElementById('recentlyRight');
             if (l) l.onclick = () => row.scrollBy({ left: -260, behavior: 'smooth' });
@@ -2683,8 +2596,10 @@
 
         function toggleWishlist(id) {
             const i = wishlist.findIndex(x => x.id === id);
-            if (i > -1) { wishlist.splice(i, 1); } else { const p = PRODUCTS.find(x => x.id === id); if (p) wishlist.push({ id: p
-                        .id, name: p.name, cat: p.cat, price: getMinPrice(p), img: p.img }); }
+            if (i > -1) { wishlist.splice(i, 1); } else {
+                const p = PRODUCTS.find(x => x.id === id);
+                if (p) wishlist.push({ id: p.id, name: p.name, cat: p.cat, price: getMinPrice(p), img: p.img });
+            }
             saveWishlist();
             updateWishlistUI();
             renderWishlistDrawer();
@@ -2718,7 +2633,7 @@
             ).join('');
             c.querySelectorAll('.wishlist-item-info').forEach(el => el.addEventListener('click', () => {
                 const p = PRODUCTS.find(x => x.id === parseInt(el.dataset.id));
-                if (p && !p.soldOut) { closeWishlistDrawer();
+                if (p && !p.sold_out) { closeWishlistDrawer();
                     openProduct(p); }
             }));
             c.querySelectorAll('.wishlist-remove').forEach(btn => btn.addEventListener('click', e => { e
@@ -2876,7 +2791,7 @@
             ).join('');
             r.querySelectorAll('.product-card').forEach(card => card.addEventListener('click', () => {
                 const p = PRODUCTS.find(x => x.id === parseInt(card.dataset.id));
-                if (p && !p.soldOut) { closeSearch();
+                if (p && !p.sold_out) { closeSearch();
                     openProduct(p); }
             }));
         }
@@ -2889,7 +2804,9 @@
 
         // ============ HOME ============
         function renderHome() {
-            const best = BEST_SELLER_IDS.map(id => PRODUCTS.find(p => p.id === id)).filter(p => p && !p.soldOut);
+            // ADMIN: use is_best_seller flag instead of hardcoded IDs
+            const best = PRODUCTS.filter(p => p.is_best_seller && !p.sold_out).sort((a, b) => a.sort_order - b
+            .sort_order);
             const br = document.getElementById('bestSellerRow');
             br.innerHTML = best.map(p => smallCard(p)).join('');
             br.querySelectorAll('.product-card-small').forEach(c => cardSmallEvents(c));
@@ -2916,7 +2833,7 @@
             c.addEventListener('click', e => {
                 if (e.target.closest('.wishlist-heart')) return;
                 const p = PRODUCTS.find(x => x.id === parseInt(c.dataset.id));
-                if (p && !p.soldOut) openProduct(p);
+                if (p && !p.sold_out) openProduct(p);
             });
         }
 
@@ -3009,7 +2926,7 @@
         function getFiltered() {
             return PRODUCTS.filter(p => {
                 if (state.category && p.cat !== state.category) return false;
-                if (state.stock === 'in' && p.soldOut) return false;
+                if (state.stock === 'in' && p.sold_out) return false;
                 return true;
             });
         }
@@ -3020,7 +2937,7 @@
             const list = getFiltered();
             document.getElementById('resultCount').textContent = `${list.length} product${list.length!==1?'s':''}`;
             document.getElementById('cntAll').textContent = PRODUCTS.length;
-            document.getElementById('cntIn').textContent = PRODUCTS.filter(p => !p.soldOut).length;
+            document.getElementById('cntIn').textContent = PRODUCTS.filter(p => !p.sold_out).length;
             if (!list.length) {
                 grid.innerHTML =
                     `<div class="empty-state"><div class="ico">✦</div><h3>No products found</h3><p>Try a different category or filter.</p></div>`;
@@ -3028,12 +2945,12 @@
             }
             const inW = id => inWishlist(id) ? 'active' : '';
             grid.innerHTML = list.map(p =>
-                `<article class="product-card" data-id="${p.id}"><div class="product-img-wrap">${p.badge?`<span class="badge ${p.soldOut?'sold-out':''}">${p.badge}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy"><button class="wishlist-heart ${inW(p.id)}" data-id="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></div><div class="product-info"><div class="product-cat">${p.cat}</div><h3 class="product-title">${p.name}</h3><div class="product-price">${p.soldOut?'<span class="price-old">Unavailable</span>':`<span class="price-now">${priceDisplay(p)}</span>`}</div></div></article>`
+                `<article class="product-card" data-id="${p.id}"><div class="product-img-wrap">${p.badge?`<span class="badge ${p.sold_out?'sold-out':''}">${p.badge}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy"><button class="wishlist-heart ${inW(p.id)}" data-id="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></div><div class="product-info"><div class="product-cat">${p.cat}</div><h3 class="product-title">${p.name}</h3><div class="product-price">${p.sold_out?'<span class="price-old">Unavailable</span>':`<span class="price-now">${priceDisplay(p)}</span>`}</div></div></article>`
             ).join('');
             grid.querySelectorAll('.product-card').forEach(c => c.addEventListener('click', e => {
                 if (e.target.closest('.wishlist-heart')) return;
                 const p = PRODUCTS.find(x => x.id === parseInt(c.dataset.id));
-                if (p && !p.soldOut) openProduct(p);
+                if (p && !p.sold_out) openProduct(p);
             }));
             grid.querySelectorAll('.wishlist-heart').forEach(heartEvents);
             skelContainer(grid);
@@ -3042,7 +2959,7 @@
         // ============ PRODUCT DETAIL ============
         function openProduct(product) {
             currentDetailProduct = product;
-            currentColor = product.colors[0];
+            currentColor = product.colors && product.colors.length ? product.colors[0] : 0;
             isCustom = false;
             addRecentlyViewed(product);
 
@@ -3051,23 +2968,23 @@
 
             const tc = document.getElementById('detailTypeContainer'),
                 ts = document.getElementById('detailTypeSelect');
-            if (product.priceOptions) {
+            if (product.price_options && product.price_options.length) {
                 tc.style.display = 'block';
-                ts.innerHTML = product.priceOptions.map((o, i) =>
+                ts.innerHTML = product.price_options.map((o, i) =>
                     `<option value="${i}">${o.name} — ${o.price} EGP</option>`).join('');
-                detailPrice = product.priceOptions[0].price;
-                ts.onchange = () => { detailPrice = product.priceOptions[parseInt(ts.value)].price;
+                detailPrice = product.price_options[0].price;
+                ts.onchange = () => { detailPrice = product.price_options[parseInt(ts.value)].price;
                     updateDetailPrice(); };
             } else { tc.style.display = 'none';
                 detailPrice = initPrice(product); }
 
             const ss = document.getElementById('detailSizeSelect');
-            ss.innerHTML = product.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
-            ss.disabled = product.sizes.length === 1;
-            if (product.sizePrices) {
-                ss.onchange = () => { detailPrice = product.sizePrices[ss.value];
+            ss.innerHTML = (product.sizes || ['One size']).map(s => `<option value="${s}">${s}</option>`).join('');
+            ss.disabled = (product.sizes || []).length === 1;
+            if (product.size_prices) {
+                ss.onchange = () => { detailPrice = product.size_prices[ss.value];
                     updateDetailPrice(); };
-                detailPrice = product.sizePrices[ss.value];
+                detailPrice = product.size_prices[ss.value] || initPrice(product);
             }
             updateDetailPrice();
 
@@ -3076,9 +2993,14 @@
             document.getElementById('customizationNotes').style.display = 'none';
             document.getElementById('customizationNotes').value = '';
 
-            slideImgs = product.extraImages?.length ? product.extraImages : [product.colorImages?.[currentColor] ||
-                product.img
-            ];
+            // Build slide images
+            if (product.extra_images && product.extra_images.length) {
+                slideImgs = product.extra_images;
+            } else if (product.color_images && product.color_images[currentColor]) {
+                slideImgs = [product.color_images[currentColor]];
+            } else {
+                slideImgs = [product.img];
+            }
             currentSlide = 0;
             renderSlider();
 
@@ -3096,8 +3018,10 @@
 
         function renderSwatches(p) {
             const c = document.getElementById('detailColorSwatches');
+            if (!p.colors || !p.colors.length) { c.innerHTML = ''; return; }
             c.innerHTML = p.colors.map(ci => {
                 const col = COLORS[ci];
+                if (!col) return '';
                 const sel = ci === currentColor ? 'selected' : '';
                 if (col.split) return `<button class="detail-color-swatch split ${sel}" style="--swatch-left:${col.split[0]};--swatch-right:${col.split[1]}" data-color="${ci}" title="${col.name}"></button>`;
                 return `<button class="detail-color-swatch ${sel}" style="background:${col.hex}" data-color="${ci}" title="${col.name}"></button>`;
@@ -3107,10 +3031,9 @@
                 currentColor = parseInt(btn.dataset.color);
                 c.querySelectorAll('.detail-color-swatch').forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');
-                if (!currentDetailProduct.extraImages?.length) {
-                    slideImgs = [currentDetailProduct.colorImages?.[currentColor] || currentDetailProduct
-                        .img
-                    ];
+                if (!currentDetailProduct.extra_images || !currentDetailProduct.extra_images.length) {
+                    slideImgs = [currentDetailProduct.color_images && currentDetailProduct.color_images[
+                        currentColor] || currentDetailProduct.img];
                     currentSlide = 0;
                     renderSlider();
                 }
@@ -3144,7 +3067,7 @@
                 updateSlider();
             }));
             track.querySelectorAll('img').forEach((img, i) => img.addEventListener('click', () => openLightbox(
-            slideImgs, i)));
+                slideImgs, i)));
             const sc = document.getElementById('sliderContainer');
             sc.ontouchstart = e => { sliderStartX = e.changedTouches[0].screenX; };
             sc.ontouchend = e => {
@@ -3166,12 +3089,11 @@
         // ============ CART ============
         function addToCart(pid, size, color, img, notes, price, type) {
             const p = PRODUCTS.find(x => x.id === pid);
-            if (!p || p.soldOut) return;
+            if (!p || p.sold_out) return;
             const ex = cart.find(c => c.id === pid && c.size === size && c.color === color && c.notes === notes && c
                 .type === type);
             if (ex) ex.qty++;
             else cart.push({ id: p.id, cat: p.cat, price, img, name: p.name, size, color, qty: 1, notes, type });
-            // reset discount when cart changes
             appliedDiscount = null;
             document.getElementById('discountInput').value = '';
             document.getElementById('discountFeedback').innerHTML = '';
@@ -3183,7 +3105,6 @@
             if (i < 0 || i >= cart.length) return;
             cart[i].qty += d;
             if (cart[i].qty <= 0) cart.splice(i, 1);
-            // reset discount
             appliedDiscount = null;
             document.getElementById('discountInput').value = '';
             document.getElementById('discountFeedback').innerHTML = '';
@@ -3203,7 +3124,6 @@
             const count = cart.reduce((s, c) => s + c.qty, 0);
             itemCount.textContent = count;
 
-            // apply discount if any
             let displayTotal = total;
             let discountMsg = '';
             if (appliedDiscount) {
@@ -3233,7 +3153,7 @@
                 .dataset.i), parseInt(btn.dataset.d))));
         }
 
-        // ============ DISCOUNT LOGIC (only one allowed) ============
+        // ============ DISCOUNT ============
         function applyDiscount() {
             const input = document.getElementById('discountInput');
             const feedback = document.getElementById('discountFeedback');
@@ -3251,7 +3171,6 @@
                 renderCart();
                 return;
             }
-            // Replace any existing discount with the new one
             appliedDiscount = found;
             let msg = `✅ Code "${found.code}" applied!`;
             if (found.discount > 0) msg += ` ${Math.round(found.discount*100)}% off`;
@@ -3259,7 +3178,6 @@
             feedback.innerHTML = msg + ` <span class="remove-discount" id="removeDiscount">Remove</span>`;
             feedback.className = 'discount-feedback success';
             renderCart();
-            // Attach remove handler
             document.getElementById('removeDiscount')?.addEventListener('click', removeDiscount);
         }
 
@@ -3280,12 +3198,12 @@
             const p = currentDetailProduct;
             if (!p) return;
             const size = document.getElementById('detailSizeSelect').value;
-            const color = isCustom ? 'Customized' : COLORS[currentColor].name;
+            const color = isCustom ? 'Customized' : COLORS[currentColor]?.name || 'Default';
             const img = slideImgs[currentSlide] || slideImgs[0];
             const notes = isCustom ? document.getElementById('customizationNotes').value : '';
             let type = null;
-            if (p.priceOptions) { const ts = document.getElementById('detailTypeSelect');
-                type = p.priceOptions[parseInt(ts.value)].name; }
+            if (p.price_options) { const ts = document.getElementById('detailTypeSelect');
+                type = p.price_options[parseInt(ts.value)].name; }
             addToCart(p.id, size, color, img, notes, detailPrice, type);
             openCart();
         });
@@ -3294,12 +3212,12 @@
             const p = currentDetailProduct;
             if (!p) return;
             const size = document.getElementById('detailSizeSelect').value;
-            const color = isCustom ? 'Customized' : COLORS[currentColor].name;
+            const color = isCustom ? 'Customized' : COLORS[currentColor]?.name || 'Default';
             const img = slideImgs[currentSlide] || slideImgs[0];
             const notes = isCustom ? document.getElementById('customizationNotes').value : '';
             let type = null;
-            if (p.priceOptions) { const ts = document.getElementById('detailTypeSelect');
-                type = p.priceOptions[parseInt(ts.value)].name; }
+            if (p.price_options) { const ts = document.getElementById('detailTypeSelect');
+                type = p.price_options[parseInt(ts.value)].name; }
             addToCart(p.id, size, color, img, notes, detailPrice, type);
             const btn = document.getElementById('detailAddToCartBtn');
             btn.textContent = '✓ Added!';
@@ -3312,7 +3230,7 @@
         function renderYouMayLike(p) {
             const sec = document.getElementById('youMayLikeSection'),
                 row = document.getElementById('youMayLikeRow');
-            const same = PRODUCTS.filter(x => x.cat === p.cat && x.id !== p.id && !x.soldOut);
+            const same = PRODUCTS.filter(x => x.cat === p.cat && x.id !== p.id && !x.sold_out);
             if (!same.length) { sec.style.display = 'none'; return; }
             sec.style.display = 'block';
             row.innerHTML = same.slice(0, 4).map(x => smallCard(x)).join('');
@@ -3329,7 +3247,7 @@
         function openCart() {
             document.getElementById('cartDrawer').classList.add('show');
             document.getElementById('overlay').classList.add('show');
-            renderCart(); // ensure discount display is updated
+            renderCart();
         }
 
         function closeCart() {
@@ -3406,20 +3324,126 @@
         }
         document.getElementById('mobileFilterOpen').addEventListener('click', openMobileFilter);
 
-        // ============ INIT ============
-        loadCart();
-        loadWishlist();
-        loadRecentlyViewed();
-        renderCart();
-        updateWishlistUI();
-        updateBadges();
-        renderHome();
-        setupArrows();
-        renderCategoryList();
+        // ============ STORAGE ============
+        function saveCart() { localStorage.setItem('rubies_cart', JSON.stringify(cart)); }
 
+        function loadCart() {
+            try { const s = localStorage.getItem('rubies_cart'); if (s) { cart = JSON.parse(s) || []; cart.forEach(c => { if (!
+                        c.img) { const p = PRODUCTS.find(x => x.id === c.id); if (p) c.img = p.img; } }); } } catch (
+            e) { cart = []; }
+        }
+
+        function saveWishlist() { localStorage.setItem('rubies_wishlist', JSON.stringify(wishlist)); }
+
+        function loadWishlist() {
+            try { const s = localStorage.getItem('rubies_wishlist'); if (s) wishlist = JSON.parse(s) || []; } catch (
+            e) { wishlist = []; }
+        }
+
+        function saveRecentlyViewed() {
+            localStorage.setItem('rubies_recently', JSON.stringify(recentlyViewed.slice(0, 10)));
+        }
+
+        function loadRecentlyViewed() {
+            try { const s = localStorage.getItem('rubies_recently'); if (s) { recentlyViewed = JSON.parse(s) || []; } else {
+                    recentlyViewed = []; } } catch (e) { recentlyViewed = []; }
+        }
+
+        // ============ FETCH PRODUCTS FROM SUPABASE ============
+        // ADMIN: main entry point — load products from Supabase on page load
+        async function fetchProducts() {
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .order('sort_order', { ascending: true });
+
+                if (error) throw error;
+
+                // Transform to match the frontend's expected structure
+                PRODUCTS = data.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    cat: p.cat,
+                    price: p.price,
+                    price_options: p.price_options || null,
+                    size_prices: p.size_prices || null,
+                    old_price: p.old_price || null,
+                    colors: p.colors || [],
+                    sizes: p.sizes || ['One size'],
+                    img: p.img || '',
+                    color_images: p.color_images || {},
+                    extra_images: p.extra_images || [],
+                    badge: p.badge || null,
+                    is_best_seller: p.is_best_seller || false,
+                    sold_out: p.sold_out || false,
+                    sort_order: p.sort_order || 0
+                }));
+
+                productsLoaded = true;
+                initApp();
+            } catch (err) {
+                console.error('Failed to load products from Supabase:', err);
+                // Fallback: show error but keep site usable with empty state
+                PRODUCTS = [];
+                productsLoaded = true;
+                initApp();
+                // Show a user-friendly error
+                const grid = document.getElementById('productGrid');
+                if (grid) {
+                    grid.innerHTML =
+                        `<div class="empty-state"><div class="ico">⚠️</div><h3>Could not load products</h3><p>Please refresh the page or try again later.</p></div>`;
+                }
+            }
+        }
+
+        // ============ INIT APP ============
+        function initApp() {
+            loadCart();
+            loadWishlist();
+            loadRecentlyViewed();
+            renderCart();
+            updateWishlistUI();
+            updateBadges();
+            renderHome();
+            setupArrows();
+            renderCategoryList();
+            // If we're in a category view, re-render products
+            if (state.view === 'category') {
+                renderProducts();
+            }
+            // Re-populate recently viewed with valid products
+            renderRecentlyViewed();
+
+            // Force skeleton removal after products load
+            document.querySelectorAll('.skeleton').forEach(el => el.classList.add('hidden'));
+        }
+
+        // ============ START ============
+        // Show loading skeletons while fetching
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show skeleton placeholders immediately
+            const br = document.getElementById('bestSellerRow');
+            if (br) {
+                br.innerHTML = Array(4).fill(0).map(() =>
+                    `<div class="product-card-small"><div class="product-img-wrap"><div class="skeleton"></div></div><div class="product-info"><div class="product-cat"> </div><div class="product-title"> </div><div class="product-price"> </div></div></div>`
+                ).join('');
+            }
+            const cr = document.getElementById('categoryRow');
+            if (cr) {
+                cr.innerHTML = Array(4).fill(0).map(() =>
+                    `<div class="category-card"><div class="skeleton" style="border-radius:var(--radius-lg);"></div></div>`
+                ).join('');
+            }
+            // Fetch products from Supabase
+            fetchProducts();
+        });
+
+        // Keyboard shortcuts
         document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSearch();
                 closeLightbox(); } });
 
+        // Skeleton observer
         new MutationObserver(() => {
             document.querySelectorAll('img:not(.no-sk)').forEach(img => {
                 const w = img.parentElement;
