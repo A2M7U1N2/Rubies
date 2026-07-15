@@ -2298,10 +2298,17 @@
                 <div class="slider-dots" id="sliderDots"></div>
             </div>
             <div class="detail-info-col">
+                <!-- COLOR SWATCHES moved to the very top of the info column (first thing after image) -->
+                <div>
+                    <div class="detail-label">Select Color</div>
+                    <div class="detail-colors" id="detailColorSwatches"></div>
+                </div>
+
                 <div class="detail-cat" id="detailCat"></div>
                 <h2 id="detailName"></h2>
                 <div class="detail-price" id="detailPrice"></div>
                 <div class="detail-divider"></div>
+
                 <div id="detailTypeContainer" style="display:none;">
                     <div class="detail-label">Select Type</div>
                     <select class="detail-size-select" id="detailTypeSelect"></select>
@@ -2310,10 +2317,7 @@
                     <div class="detail-label">Select Size</div>
                     <select class="detail-size-select" id="detailSizeSelect"></select>
                 </div>
-                <div>
-                    <div class="detail-label">Select Color</div>
-                    <div class="detail-colors" id="detailColorSwatches"></div>
-                </div>
+
                 <div class="customized-option" id="customizedOption">
                     <div class="customized-check" id="customizedCheck"></div>
                     <span>Customized — add notes below</span>
@@ -2451,7 +2455,7 @@
     <script>
         // ============ DISCOUNT CODES — easily editable ============
         const discountCodes = [
-            { code: 'RUBIES10', discount: 0.10 }, // 20% off
+            { code: 'RUBIES10', discount: 0.10 },
             { code: 'FREESHIP', discount: 0.0, note: 'Free shipping' }
         ];
 
@@ -2465,21 +2469,21 @@
             'Phone strap': 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg'
         };
         const COLORS = [
-            { name: 'Black', hex: '#1a1a1a' },                                                                //0 
-            { name: 'White', hex: '#f5f5f5' },                                                                //1 
-            { name: 'Hot Pink', hex: '#ff69b4' },                                                             //2
-            { name: 'Orange', hex: '#ff8c42' },                                                               //3
-            { name: 'Red', hex: '#d43d3d' },                                                                  //4
-            { name: 'Blue', hex: '#4a7ebd' },                                                                 //5
-            { name: 'Purple', hex: '#8b5cf6' },                                                               //6
-            { name: 'Yellow', hex: '#f5d547' },                                                               //7
-            { name: 'Pink', hex: '#f0a5c0' },                                                                 //8              
-            { name: 'Beige', hex: '#d5c3a5' },                                                                //9
-            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] },                     //10
-            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] },                              //11
-            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] },                         //12
-            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] },                  //13
-            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }                           //14
+            { name: 'Black', hex: '#1a1a1a' },
+            { name: 'White', hex: '#f5f5f5' },
+            { name: 'Hot Pink', hex: '#ff69b4' },
+            { name: 'Orange', hex: '#ff8c42' },
+            { name: 'Red', hex: '#d43d3d' },
+            { name: 'Blue', hex: '#4a7ebd' },
+            { name: 'Purple', hex: '#8b5cf6' },
+            { name: 'Yellow', hex: '#f5d547' },
+            { name: 'Pink', hex: '#f0a5c0' },
+            { name: 'Beige', hex: '#d5c3a5' },
+            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] },
+            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] },
+            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] },
+            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] },
+            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }
         ];
         const PRODUCTS = [
             { id: 1, name: 'Circle Bag', cat: 'Shoulder bag', price: 330, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -2542,11 +2546,12 @@
                     8: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_40_09%20AM.png', 
                     9: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%207,%202026,%2012_41_22%20AM.png' },
                 badge: 'Best Seller', date: 7 },
+            // PRODUCT #8 — marked sold out
             { id: 8, name: 'Rolled Phone Strap', cat: 'Phone strap', priceOptions: [{ name: 'Hand', price: 80 },
                 { name: 'Cross', price: 130 }
             ], colors: [1, 2, 3, 4, 5, 7, 8], sizes: ['One size'],
                 img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.11.43%20AM%20(1).jpeg',
-                badge: null, date: 8 },
+                badge: 'Sold Out', soldOut: true, date: 8 },
             { id: 9, name: 'Cross Phone Strap', cat: 'Phone strap', price: 110, colors: [1, 2, 3, 4, 5, 7, 8],
                 sizes: ['100 cm', '120 cm', '140 cm'],
                 img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg',
@@ -2559,8 +2564,9 @@
                 badge: 'Sale', date: 10 },
             { id: 11, name: 'Sequin Clutch', cat: 'Clutch', priceOptions: [{ name: '18x12 cm', price: 240 }, { name: '23x12 cm',
                     price: 270 }], colors: [0, 6], sizes: ['One size'],
-                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%2012.54.14%20AM.jpeg',
-                colorImages: { 0: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jun%2028,%202026,%2008_33_21%20PM.png', 6: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%2012.54.14%20AM.jpeg' },
+                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-07-15%20at%202.32.58%20AM.jpeg',
+                colorImages: { 0: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%2015,%202026,%2003_00_25%20AM.png', 
+                              6: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-07-15%20at%202.32.58%20AM.jpeg' },
                 badge: 'New', date: 11 }
         ];
 
@@ -2575,7 +2581,7 @@
             currentSlide = 0,
             detailPrice = 0;
         let recentlyViewed = [];
-        let appliedDiscount = null; // { code, discount, note? }
+        let appliedDiscount = null;
 
         // ============ STORAGE ============
         function saveCart() { localStorage.setItem('rubies_cart', JSON.stringify(cart)); }
@@ -2645,7 +2651,7 @@
 
         // ============ RECENTLY VIEWED ============
         function addRecentlyViewed(p) {
-            if (!p) return;
+            if (!p || p.soldOut) return;
             recentlyViewed = recentlyViewed.filter(r => r.id !== p.id);
             recentlyViewed.unshift({ id: p.id, name: p.name, cat: p.cat, price: getMinPrice(p), img: p.img });
             if (recentlyViewed.length > 10) recentlyViewed.pop();
@@ -2671,7 +2677,6 @@
             row.querySelectorAll('.product-card-small').forEach(c => cardSmallEvents(c));
             row.querySelectorAll('.wishlist-heart').forEach(heartEvents);
             skelContainer(row);
-            // arrows
             const l = document.getElementById('recentlyLeft'),
                 ri = document.getElementById('recentlyRight');
             if (l) l.onclick = () => row.scrollBy({ left: -260, behavior: 'smooth' });
@@ -2864,8 +2869,8 @@
             const r = document.getElementById('searchResults');
             const query = q.trim().toLowerCase();
             if (!query) { r.innerHTML = ''; return; }
-            const matches = PRODUCTS.filter(p => p.name.toLowerCase().includes(query) || p.cat.toLowerCase().includes(
-            query));
+            const matches = PRODUCTS.filter(p => !p.soldOut && (p.name.toLowerCase().includes(query) || p.cat.toLowerCase()
+                .includes(query)));
             if (!matches.length) {
                 r.innerHTML =
                     `<div class="search-empty"><div class="ico">✦</div><h3>No results</h3><p>Try different keywords.</p></div>`;
@@ -2909,7 +2914,7 @@
 
         function smallCard(p) {
             const inW = inWishlist(p.id) ? 'active' : '';
-            return `<div class="product-card-small" data-id="${p.id}"><div class="product-img-wrap">${p.badge?`<span class="badge">${p.badge}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy"><button class="wishlist-heart ${inW}" data-id="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></div><div class="product-info"><div class="product-cat">${p.cat}</div><h3 class="product-title">${p.name}</h3><div class="product-price"><span class="price-now">${priceDisplay(p)}</span></div></div></div>`;
+            return `<div class="product-card-small" data-id="${p.id}"><div class="product-img-wrap">${p.badge?`<span class="badge ${p.soldOut?'sold-out':''}">${p.badge}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy"><button class="wishlist-heart ${inW}" data-id="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></div><div class="product-info"><div class="product-cat">${p.cat}</div><h3 class="product-title">${p.name}</h3><div class="product-price"><span class="price-now">${priceDisplay(p)}</span></div></div></div>`;
         }
 
         function cardSmallEvents(c) {
@@ -2986,7 +2991,8 @@
         function renderCategoryList() {
             const list = document.getElementById('categoryList');
             list.innerHTML = ['All', ...CATEGORIES].map(cat => {
-                const count = cat === 'All' ? PRODUCTS.length : PRODUCTS.filter(p => p.cat === cat).length;
+                const count = cat === 'All' ? PRODUCTS.filter(p => !p.soldOut).length : PRODUCTS.filter(p => p
+                    .cat === cat && !p.soldOut).length;
                 const active = (cat === 'All' && !state.category) || cat === state.category ? 'active' : '';
                 return `<li><button class="${active}" data-cat="${cat==='All'?'':cat}">${cat}<span class="count">${count}</span></button></li>`;
             }).join('');
@@ -3019,7 +3025,7 @@
             const grid = document.getElementById('productGrid');
             const list = getFiltered();
             document.getElementById('resultCount').textContent = `${list.length} product${list.length!==1?'s':''}`;
-            document.getElementById('cntAll').textContent = PRODUCTS.length;
+            document.getElementById('cntAll').textContent = PRODUCTS.filter(p => !p.soldOut).length;
             document.getElementById('cntIn').textContent = PRODUCTS.filter(p => !p.soldOut).length;
             if (!list.length) {
                 grid.innerHTML =
@@ -3041,10 +3047,14 @@
 
         // ============ PRODUCT DETAIL ============
         function openProduct(product) {
+            if (product.soldOut) return;
             currentDetailProduct = product;
             currentColor = product.colors[0];
             isCustom = false;
             addRecentlyViewed(product);
+
+            // Color swatches rendered first (they appear at the top of the info column)
+            renderSwatches(product);
 
             document.getElementById('detailCat').textContent = product.cat;
             document.getElementById('detailName').textContent = product.name;
@@ -3071,7 +3081,6 @@
             }
             updateDetailPrice();
 
-            renderSwatches(product);
             document.getElementById('customizedCheck').classList.remove('checked');
             document.getElementById('customizationNotes').style.display = 'none';
             document.getElementById('customizationNotes').value = '';
@@ -3171,7 +3180,6 @@
                 .type === type);
             if (ex) ex.qty++;
             else cart.push({ id: p.id, cat: p.cat, price, img, name: p.name, size, color, qty: 1, notes, type });
-            // reset discount when cart changes
             appliedDiscount = null;
             document.getElementById('discountInput').value = '';
             document.getElementById('discountFeedback').innerHTML = '';
@@ -3183,7 +3191,6 @@
             if (i < 0 || i >= cart.length) return;
             cart[i].qty += d;
             if (cart[i].qty <= 0) cart.splice(i, 1);
-            // reset discount
             appliedDiscount = null;
             document.getElementById('discountInput').value = '';
             document.getElementById('discountFeedback').innerHTML = '';
@@ -3203,7 +3210,6 @@
             const count = cart.reduce((s, c) => s + c.qty, 0);
             itemCount.textContent = count;
 
-            // apply discount if any
             let displayTotal = total;
             let discountMsg = '';
             if (appliedDiscount) {
@@ -3233,7 +3239,7 @@
                 .dataset.i), parseInt(btn.dataset.d))));
         }
 
-        // ============ DISCOUNT LOGIC (only one allowed) ============
+        // ============ DISCOUNT LOGIC ============
         function applyDiscount() {
             const input = document.getElementById('discountInput');
             const feedback = document.getElementById('discountFeedback');
@@ -3251,7 +3257,6 @@
                 renderCart();
                 return;
             }
-            // Replace any existing discount with the new one
             appliedDiscount = found;
             let msg = `✅ Code "${found.code}" applied!`;
             if (found.discount > 0) msg += ` ${Math.round(found.discount*100)}% off`;
@@ -3259,7 +3264,6 @@
             feedback.innerHTML = msg + ` <span class="remove-discount" id="removeDiscount">Remove</span>`;
             feedback.className = 'discount-feedback success';
             renderCart();
-            // Attach remove handler
             document.getElementById('removeDiscount')?.addEventListener('click', removeDiscount);
         }
 
@@ -3329,7 +3333,7 @@
         function openCart() {
             document.getElementById('cartDrawer').classList.add('show');
             document.getElementById('overlay').classList.add('show');
-            renderCart(); // ensure discount display is updated
+            renderCart();
         }
 
         function closeCart() {
