@@ -2469,21 +2469,22 @@
             'Phone strap': 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg'
         };
         const COLORS = [
-            { name: 'Black', hex: '#1a1a1a' },
-            { name: 'White', hex: '#f5f5f5' },
-            { name: 'Hot Pink', hex: '#ff69b4' },
-            { name: 'Orange', hex: '#ff8c42' },
-            { name: 'Red', hex: '#d43d3d' },
-            { name: 'Blue', hex: '#4a7ebd' },
-            { name: 'Purple', hex: '#8b5cf6' },
-            { name: 'Yellow', hex: '#f5d547' },
-            { name: 'Pink', hex: '#f0a5c0' },
-            { name: 'Beige', hex: '#d5c3a5' },
-            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] },
-            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] },
-            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] },
-            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] },
-            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }
+            { name: 'Black', hex: '#1a1a1a' }, //0
+            { name: 'White', hex: '#f5f5f5' }, //1
+            { name: 'Hot Pink', hex: '#ff69b4' }, //2
+            { name: 'Orange', hex: '#ff8c42' }, //3
+            { name: 'Red', hex: '#d43d3d' }, //4
+            { name: 'Blue', hex: '#4a7ebd' }, //5
+            { name: 'Purple', hex: '#8b5cf6' }, //6
+            { name: 'Yellow', hex: '#f5d547' }, //7
+            { name: 'Pink', hex: '#f0a5c0' }, //8
+            { name: 'Beige', hex: '#d5c3a5' }, //9
+            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] }, //10
+            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] }, //11
+            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] }, //12
+            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] }, //13
+            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }, //14
+            { name: 'green', hex: '#047740' } //15
         ];
         const PRODUCTS = [
             { id: 1, name: 'Circle Bag', cat: 'Shoulder bag', price: 330, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -2567,7 +2568,23 @@
                 img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-07-15%20at%202.32.58%20AM.jpeg',
                 colorImages: { 0: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%2015,%202026,%2003_00_25%20AM.png', 
                               6: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-07-15%20at%202.32.58%20AM.jpeg' },
-                badge: 'New', date: 11 }
+                badge: 'New', date: 11 },
+            { id: 12, name: 'Mittalic Clutch', cat: 'Clutch', priceOptions: [{ name: 'Solid', price: 550 }, { name: 'With Gold Strap',
+                    price: 600 }], colors: [15, 7], sizes: ['26x16 cm'],
+                img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_16_13%20AM.png',
+                colorImages: { 
+                    15: [
+                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_16_13%20AM.png',
+                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_15_59%20AM.png',
+                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_16_07%20AM.png'
+                    ],
+                    7: [
+                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_34_20%20AM.png',
+                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_34_39%20AM.png',
+                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_34_44%20AM.png'
+                    ]
+                },
+                badge: 'New', date: 12 }
         ];
 
         // ============ STATE ============
@@ -3085,9 +3102,15 @@
             document.getElementById('customizationNotes').style.display = 'none';
             document.getElementById('customizationNotes').value = '';
 
-            slideImgs = product.extraImages?.length ? product.extraImages : [product.colorImages?.[currentColor] ||
-                product.img
-            ];
+            // ==== HERE IS THE MODIFIED PART ====
+            const colorImgs = product.colorImages?.[currentColor];
+            if (Array.isArray(colorImgs)) {
+                slideImgs = colorImgs;
+            } else if (product.extraImages?.length) {
+                slideImgs = product.extraImages;
+            } else {
+                slideImgs = [colorImgs || product.img];
+            }
             currentSlide = 0;
             renderSlider();
 
@@ -3116,13 +3139,18 @@
                 currentColor = parseInt(btn.dataset.color);
                 c.querySelectorAll('.detail-color-swatch').forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');
-                if (!currentDetailProduct.extraImages?.length) {
-                    slideImgs = [currentDetailProduct.colorImages?.[currentColor] || currentDetailProduct
-                        .img
-                    ];
-                    currentSlide = 0;
-                    renderSlider();
+
+                // ==== HERE IS THE MODIFIED PART ====
+                const colorImgs = currentDetailProduct.colorImages?.[currentColor];
+                if (Array.isArray(colorImgs)) {
+                    slideImgs = colorImgs;
+                } else if (currentDetailProduct.extraImages?.length) {
+                    slideImgs = currentDetailProduct.extraImages;
+                } else {
+                    slideImgs = [colorImgs || currentDetailProduct.img];
                 }
+                currentSlide = 0;
+                renderSlider();
             }));
         }
 
