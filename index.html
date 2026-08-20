@@ -2469,22 +2469,21 @@
             'Phone strap': 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg'
         };
         const COLORS = [
-            { name: 'Black', hex: '#1a1a1a' }, //0
-            { name: 'White', hex: '#f5f5f5' }, //1
-            { name: 'Hot Pink', hex: '#ff69b4' }, //2
-            { name: 'Orange', hex: '#ff8c42' }, //3
-            { name: 'Red', hex: '#d43d3d' }, //4
-            { name: 'Blue', hex: '#4a7ebd' }, //5
-            { name: 'Purple', hex: '#8b5cf6' }, //6
-            { name: 'Yellow', hex: '#f5d547' }, //7
-            { name: 'Pink', hex: '#f0a5c0' }, //8
-            { name: 'Beige', hex: '#d5c3a5' }, //9
-            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] }, //10
-            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] }, //11
-            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] }, //12
-            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] }, //13
-            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }, //14
-            { name: 'green', hex: '#047740' } //15
+            { name: 'Black', hex: '#1a1a1a' },
+            { name: 'White', hex: '#f5f5f5' },
+            { name: 'Hot Pink', hex: '#ff69b4' },
+            { name: 'Orange', hex: '#ff8c42' },
+            { name: 'Red', hex: '#d43d3d' },
+            { name: 'Blue', hex: '#4a7ebd' },
+            { name: 'Purple', hex: '#8b5cf6' },
+            { name: 'Yellow', hex: '#f5d547' },
+            { name: 'Pink', hex: '#f0a5c0' },
+            { name: 'Beige', hex: '#d5c3a5' },
+            { name: 'Hot Pink + Orange', hex: '#ff6b6b', split: ['#ff69b4', '#ff8c42'] },
+            { name: 'Mix Blue', hex: '#3a6ea5', split: ['#4a7ebd', '#2a5a8a'] },
+            { name: 'White + Black', hex: '#d0d0d0', split: ['#f5f5f5', '#1a1a1a'] },
+            { name: 'Butter Yellow + Pink', hex: '#f7c5c5', split: ['#f5d547', '#f0a5c0'] },
+            { name: 'Black + Grey', hex: '#4a4a4a', split: ['#1a1a1a', '#888888'] }
         ];
         const PRODUCTS = [
             { id: 1, name: 'Circle Bag', cat: 'Shoulder bag', price: 330, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -2569,22 +2568,34 @@
                 colorImages: { 0: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%2015,%202026,%2003_00_25%20AM.png', 
                               6: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-07-15%20at%202.32.58%20AM.jpeg' },
                 badge: 'New', date: 11 },
-            { id: 12, name: 'Metallic Clutch', cat: 'Clutch', priceOptions: [{ name: 'Solid', price: 550 }, { name: 'With Gold Strap',
-                    price: 600 }], colors: [15, 7], sizes: ['26x16 cm'],
-                img: 'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_16_13%20AM.png',
+            { id: 12, name: 'Mittalic Clutch', cat: 'Clutch', priceOptions: [{ name: '18x12 cm', price: 240 }, { name: '23x12 cm',
+                    price: 270 }], colors: [0, 6], sizes: ['One size'],
+                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-07-15%20at%202.32.58%20AM.jpeg',
                 colorImages: { 
-                    15: [
-                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_16_13%20AM.png',
-                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_15_59%20AM.png',
-                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_16_07%20AM.png'
+                    0: [
+                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Jul%2015,%202026,%2003_00_25%20AM.png',
+                        'REPLACE_WITH_IMAGE_URL_2_BLACK',
+                        'REPLACE_WITH_IMAGE_URL_3_BLACK'
                     ],
-                    7: [
-                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_34_20%20AM.png',
-                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_34_39%20AM.png',
-                        'https://ik.imagekit.io/fojb8puzo/ChatGPT%20Image%20Aug%2020,%202026,%2002_34_44%20AM.png'
+                    6: [
+                        'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-07-15%20at%202.32.58%20AM.jpeg',
+                        'REPLACE_WITH_IMAGE_URL_2_PURPLE',
+                        'REPLACE_WITH_IMAGE_URL_3_PURPLE'
                     ]
                 },
-                badge: 'New', date: 12 }
+                badge: 'New', date: 12 },
+            { id: 13, name: 'Starfish Bag', cat: 'Shoulder bag', price: 220,
+                sizes: ['One size'],
+                img: 'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg',
+                extraImages: [
+                    'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM.jpeg',
+                    'https://ik.imagekit.io/fojb8puzo/WhatsApp%20Image%202026-06-28%20at%205.10.15%20AM%20(1).jpeg'
+                ],
+                colorGroups: [
+                    { label: 'Bag color', colors: [1, 2, 3, 4] },
+                    { label: 'Starfish color', colors: [5, 7, 8] }
+                ],
+                badge: 'New', date: 13 }
         ];
 
         // ============ STATE ============
@@ -2599,6 +2610,7 @@
             detailPrice = 0;
         let recentlyViewed = [];
         let appliedDiscount = null;
+        let selectedGroupColors = {};
 
         // ============ STORAGE ============
         function saveCart() { localStorage.setItem('rubies_cart', JSON.stringify(cart)); }
@@ -3066,11 +3078,29 @@
         function openProduct(product) {
             if (product.soldOut) return;
             currentDetailProduct = product;
-            currentColor = product.colors[0];
             isCustom = false;
-            addRecentlyViewed(product);
 
-            // Color swatches rendered first (they appear at the top of the info column)
+            // تهيئة currentColor أو مجموعة الألوان
+            if (product.colorGroups) {
+                selectedGroupColors = {};
+                product.colorGroups.forEach(group => {
+                    selectedGroupColors[group.label] = '';
+                });
+                currentColor = null;
+            } else {
+                currentColor = product.colors[0];
+            }
+
+            // إخفاء خيار Customized إذا كان المنتج يستخدم مجموعات الألوان
+            const customOpt = document.getElementById('customizedOption');
+            if (product.colorGroups) {
+                customOpt.style.display = 'none';
+                document.getElementById('customizationNotes').style.display = 'none';
+            } else {
+                customOpt.style.display = ''; // إظهاره
+            }
+
+            addRecentlyViewed(product);
             renderSwatches(product);
 
             document.getElementById('detailCat').textContent = product.cat;
@@ -3102,7 +3132,7 @@
             document.getElementById('customizationNotes').style.display = 'none';
             document.getElementById('customizationNotes').value = '';
 
-            // ==== HERE IS THE MODIFIED PART ====
+            // تجهيز الصور
             const colorImgs = product.colorImages?.[currentColor];
             if (Array.isArray(colorImgs)) {
                 slideImgs = colorImgs;
@@ -3128,30 +3158,51 @@
 
         function renderSwatches(p) {
             const c = document.getElementById('detailColorSwatches');
-            c.innerHTML = p.colors.map(ci => {
-                const col = COLORS[ci];
-                const sel = ci === currentColor ? 'selected' : '';
-                if (col.split) return `<button class="detail-color-swatch split ${sel}" style="--swatch-left:${col.split[0]};--swatch-right:${col.split[1]}" data-color="${ci}" title="${col.name}"></button>`;
-                return `<button class="detail-color-swatch ${sel}" style="background:${col.hex}" data-color="${ci}" title="${col.name}"></button>`;
-            }).join('');
-            c.querySelectorAll('.detail-color-swatch').forEach(btn => btn.addEventListener('click', () => {
-                if (isCustom) return;
-                currentColor = parseInt(btn.dataset.color);
-                c.querySelectorAll('.detail-color-swatch').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
+            if (p.colorGroups) {
+                // عرض حقول كتابة نصية
+                c.innerHTML = p.colorGroups.map(group => {
+                    return `<div style="margin-bottom:12px;">
+                                <div class="detail-label">${group.label}</div>
+                                <input type="text" class="cart-input group-color-input" 
+                                       data-group="${group.label}" 
+                                       value="${selectedGroupColors[group.label] || ''}" 
+                                       placeholder="what color ?" 
+                                       style="max-width:260px;">
+                            </div>`;
+                }).join('');
 
-                // ==== HERE IS THE MODIFIED PART ====
-                const colorImgs = currentDetailProduct.colorImages?.[currentColor];
-                if (Array.isArray(colorImgs)) {
-                    slideImgs = colorImgs;
-                } else if (currentDetailProduct.extraImages?.length) {
-                    slideImgs = currentDetailProduct.extraImages;
-                } else {
-                    slideImgs = [colorImgs || currentDetailProduct.img];
-                }
-                currentSlide = 0;
-                renderSlider();
-            }));
+                // ربط الأحداث
+                c.querySelectorAll('.group-color-input').forEach(input => {
+                    input.addEventListener('input', () => {
+                        const groupLabel = input.dataset.group;
+                        selectedGroupColors[groupLabel] = input.value.trim();
+                    });
+                });
+            } else {
+                // الطريقة القديمة (الدواير)
+                c.innerHTML = p.colors.map(ci => {
+                    const col = COLORS[ci];
+                    const sel = ci === currentColor ? 'selected' : '';
+                    if (col.split) return `<button class="detail-color-swatch split ${sel}" style="--swatch-left:${col.split[0]};--swatch-right:${col.split[1]}" data-color="${ci}" title="${col.name}"></button>`;
+                    return `<button class="detail-color-swatch ${sel}" style="background:${col.hex}" data-color="${ci}" title="${col.name}"></button>`;
+                }).join('');
+                c.querySelectorAll('.detail-color-swatch').forEach(btn => btn.addEventListener('click', () => {
+                    if (isCustom) return;
+                    currentColor = parseInt(btn.dataset.color);
+                    c.querySelectorAll('.detail-color-swatch').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    const colorImgs = currentDetailProduct.colorImages?.[currentColor];
+                    if (Array.isArray(colorImgs)) {
+                        slideImgs = colorImgs;
+                    } else if (currentDetailProduct.extraImages?.length) {
+                        slideImgs = currentDetailProduct.extraImages;
+                    } else {
+                        slideImgs = [colorImgs || currentDetailProduct.img];
+                    }
+                    currentSlide = 0;
+                    renderSlider();
+                }));
+            }
         }
 
         document.getElementById('customizedOption').onclick = () => {
@@ -3312,7 +3363,17 @@
             const p = currentDetailProduct;
             if (!p) return;
             const size = document.getElementById('detailSizeSelect').value;
-            const color = isCustom ? 'Customized' : COLORS[currentColor].name;
+            let color;
+            if (isCustom) {
+                color = 'Customized';
+            } else if (p.colorGroups) {
+                const parts = p.colorGroups.map(group => {
+                    return `${group.label}: ${selectedGroupColors[group.label] || 'غير محدد'}`;
+                });
+                color = parts.join(' | ');
+            } else {
+                color = COLORS[currentColor].name;
+            }
             const img = slideImgs[currentSlide] || slideImgs[0];
             const notes = isCustom ? document.getElementById('customizationNotes').value : '';
             let type = null;
@@ -3326,7 +3387,17 @@
             const p = currentDetailProduct;
             if (!p) return;
             const size = document.getElementById('detailSizeSelect').value;
-            const color = isCustom ? 'Customized' : COLORS[currentColor].name;
+            let color;
+            if (isCustom) {
+                color = 'Customized';
+            } else if (p.colorGroups) {
+                const parts = p.colorGroups.map(group => {
+                    return `${group.label}: ${selectedGroupColors[group.label] || 'غير محدد'}`;
+                });
+                color = parts.join(' | ');
+            } else {
+                color = COLORS[currentColor].name;
+            }
             const img = slideImgs[currentSlide] || slideImgs[0];
             const notes = isCustom ? document.getElementById('customizationNotes').value : '';
             let type = null;
